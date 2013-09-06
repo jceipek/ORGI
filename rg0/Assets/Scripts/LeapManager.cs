@@ -24,8 +24,10 @@ public class LeapManager : MonoBehaviour
         if (tools.Count > 0)
         {
             Tool tool = tools[0];
+            // leap motion uses different object for vectors
+            Vector3 directionVector = new Vector3(tool.Direction.x, tool.Direction.y, tool.Direction.z);
             Vector3 positionVector = new Vector3(tool.TipPosition.x, tool.TipPosition.y, tool.TipPosition.z);
-            m_pointerController.ToolMoved(positionVector);
+            m_pointerController.ToolMoved(positionVector, directionVector);
         }
 
         // do something with the tracking data in the frame...
