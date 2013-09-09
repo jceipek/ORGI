@@ -4,7 +4,7 @@ using Leap;
 
 public class LeapManager : MonoBehaviour
 {
-    public PointerController m_pointerController;
+    private PointerController m_pointerController;
 
     private Controller m_controller;
 
@@ -21,13 +21,12 @@ public class LeapManager : MonoBehaviour
 
         // update the pointer controller
         ToolList tools = frame.Tools;
-        if (tools.Count > 0)
+        if (tools.Count > 0 && m_pointerController)
         {
             Tool tool = tools[0];
             // leap motion uses different object for vectors
-            Vector3 directionVector = new Vector3(tool.Direction.x, tool.Direction.y, tool.Direction.z);
             Vector3 positionVector = new Vector3(tool.TipPosition.x, tool.TipPosition.y, tool.TipPosition.z);
-            m_pointerController.ToolMoved(positionVector, directionVector);
+            m_pointerController.ToolMoved(positionVector);
         }
 
         // do something with the tracking data in the frame...
@@ -42,5 +41,10 @@ public class LeapManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void ConnectPlayer (GameObject player)
+    {
+        m_pointerController = player.GetComponent<Wand>().m_pointerController;
     }
 }
