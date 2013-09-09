@@ -43,18 +43,14 @@ public class Server : MonoBehaviour
 
 	void MakeHostOrClient ()
 	{
-        GameObject player = Resources.Load("Player") as GameObject;
-        Vector3 initialLocation;
-        Quaternion initialRotation;
-
 		// if there's no server, let's make one
 		if (MasterServer.PollHostList().Length == 0)
 		{
         	Debug.Log("There's no host");
 			Network.InitializeServer(1, 5000, true);
 			MasterServer.RegisterHost("SpellGame", "Game Instance");
-			initialLocation = m_initialServerLocation;
-			initialRotation = m_initialServerRotation;
+
+			createPlayer(m_initialServerLocation, m_initialServerRotation);
         }
 
         // otherwise, let's connect to the first server in the list
@@ -62,14 +58,26 @@ public class Server : MonoBehaviour
         {
         	Debug.Log("There's a host");
             HostData[] hostData = MasterServer.PollHostList();
-        	Network.Connect(hostData[0].ip, hostData[0].port);
-        	initialLocation = m_initialClientLocation;
-			initialRotation = m_initialClientRotation;
+        	Network.Connect(hostData[0]);
         }
-        player = Network.Instantiate(player, initialLocation, initialRotation, 0) as GameObject;
-        m_leapManager.ConnectPlayer(player);
+
+	}
+
+	GameObject createPlayer (Vector3 initialLocation, Quaternion initialRotation)
+	{
+		GameObject player = Resources.Load("Player") as GameObject;
+		player = Network.Instantiate(player, initialLocation, initialRotation, 0) as GameObject;
+		m_leapManager.ConnectPlayer(player);
+		return player;
 	}
 	
+    void OnConnectedToServer ()
+    {
+        Debug.Log("Connected to server");
+        createPlayer(m_initialClientLocation, m_initialClientRotation);
+    }
+
+
 	// Update is called once per frame
 	void Update ()
 	{
