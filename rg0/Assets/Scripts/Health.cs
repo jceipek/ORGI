@@ -15,8 +15,8 @@ public class Health : MonoBehaviour {
 	
 	}
 
-	// [RPC]
-	// void ReceiveAttack (NetworkViewID viewID) {
-		
-	// }
+	[RPC]
+	void ReceiveAttack () {
+		Debug.Log("YOU WERE ATTACKED");
+	}
 }

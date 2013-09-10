@@ -3,6 +3,8 @@ using System.Collections;
 
 public class AttackAbility : MonoBehaviour {
 
+	private NetworkView m_networkView;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -14,8 +16,8 @@ public class AttackAbility : MonoBehaviour {
 	}
 
 	// Send attack to other player
-	// void SendAttack () {
-	// 	networkView.RPC("ReceiveAttack", RPCMode.Others);
-	// }
+	public void SendAttack () {
+		m_networkView.RPC("ReceiveAttack", RPCMode.Others);
+	}
 
 }

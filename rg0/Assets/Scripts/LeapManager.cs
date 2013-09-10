@@ -37,6 +37,7 @@ public class LeapManager : MonoBehaviour
             {
                 if (gesture.State == Gesture.GestureState.STATESTOP)
                 {
+                    m_pointerController.Gesture(gesture);
                     Debug.Log(gesture.Type + " : " + gesture.Duration);
                 }
             }

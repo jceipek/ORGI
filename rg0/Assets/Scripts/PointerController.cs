@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Leap;
 
 public class PointerController : MonoBehaviour
 {
@@ -33,5 +34,13 @@ public class PointerController : MonoBehaviour
 		// we don't want to worry about where it is in the z axis
 		position.z = 0;
 		transform.position = (position * m_movementScale) + m_positionOffset;
+	}
+
+	public void Gesture (Gesture gesture)
+	{
+		if (gesture.Type == Leap.Gesture.GestureType.TYPECIRCLE)
+		{
+			Debug.Log("Gesture type circle arrived at pointercontroller");
+		}
 	}
 }
