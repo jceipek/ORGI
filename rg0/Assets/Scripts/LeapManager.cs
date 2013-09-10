@@ -21,24 +21,26 @@ public class LeapManager : MonoBehaviour
 
         // update the pointer controller
         ToolList tools = frame.Tools;
-        if (tools.Count > 0 && m_pointerController)
-        {
-            Tool tool = tools[0];
-            // leap motion uses different object for vectors
-            Vector3 positionVector = new Vector3(tool.TipPosition.x, tool.TipPosition.y, tool.TipPosition.z);
-            m_pointerController.ToolMoved(positionVector);
-        }
-
-        // do something with the tracking data in the frame...
-        GestureList gestures = frame.Gestures();
-        if (gestures.Count > 0)
-        {
-            foreach (Gesture gesture in gestures)
+        if (m_pointerController) {
+            if (tools.Count > 0)
             {
-                if (gesture.State == Gesture.GestureState.STATESTOP)
+                Tool tool = tools[0];
+                // leap motion uses different object for vectors
+                Vector3 positionVector = new Vector3(tool.TipPosition.x, tool.TipPosition.y, tool.TipPosition.z);
+                m_pointerController.ToolMoved(positionVector);
+            }
+
+            // do something with the tracking data in the frame...
+            GestureList gestures = frame.Gestures();
+            if (gestures.Count > 0)
+            {
+                foreach (Gesture gesture in gestures)
                 {
-                    m_pointerController.Gesture(gesture);
-                    Debug.Log(gesture.Type + " : " + gesture.Duration);
+                    if (gesture.State == Gesture.GestureState.STATESTOP)
+                    {
+                        m_pointerController.Gesture(gesture);
+                        Debug.Log(gesture.Type + " : " + gesture.Duration);
+                    }
                 }
             }
         }
