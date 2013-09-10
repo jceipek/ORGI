@@ -5,6 +5,11 @@ public class AttackAbility : MonoBehaviour {
 
 	private NetworkView m_networkView;
 
+	void OnEnable ()
+	{
+		m_networkView = GetComponent<NetworkView>();
+	}
+
 	// Use this for initialization
 	void Start () {
 	

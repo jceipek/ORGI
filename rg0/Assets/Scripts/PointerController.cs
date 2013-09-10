@@ -5,6 +5,7 @@ using Leap;
 public class PointerController : MonoBehaviour
 {
 
+	public AttackAbility m_attackAbility;
 	public float m_movementScale;
 	public Vector3 m_positionOffset;
 
@@ -41,6 +42,7 @@ public class PointerController : MonoBehaviour
 		if (gesture.Type == Leap.Gesture.GestureType.TYPECIRCLE)
 		{
 			Debug.Log("Gesture type circle arrived at pointercontroller");
+			m_attackAbility.SendAttack();
 		}
 	}
 }
