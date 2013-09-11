@@ -11,12 +11,9 @@ public class Server : MonoBehaviour
 	public Quaternion m_initialServerRotation;
 	public Quaternion m_initialClientRotation;
 
-	public LeapManager m_leapManager;
+	public Color[] m_playerColors;
 
-	// Use this for initialization
-	void Start ()
-	{
-	}
+	public LeapManager m_leapManager;
 
 	void Awake ()
 	{
@@ -46,20 +43,22 @@ public class Server : MonoBehaviour
 		// if there's no server, let's make one
 		if (MasterServer.PollHostList().Length == 0)
 		{
-        	Debug.Log("There's no host");
+			Debug.Log("There's no host");
 			Network.InitializeServer(1, 5000, true);
 			MasterServer.RegisterHost("SpellGame", "Game Instance");
 
-			createPlayer(m_initialServerLocation, m_initialServerRotation);
-        }
+			GameObject player = createPlayer(m_initialServerLocation, m_initialServerRotation);
+			VisualizationController visualizationController = player.GetComponent<VisualizationController>();
+			visualizationController.InitializeColors(m_playerColors[0]);
+		}
 
-        // otherwise, let's connect to the first server in the list
-        else
-        {
-        	Debug.Log("There's a host");
-            HostData[] hostData = MasterServer.PollHostList();
-        	Network.Connect(hostData[0]);
-        }
+		// otherwise, let's connect to the first server in the list
+		else
+		{
+			Debug.Log("There's a host");
+			HostData[] hostData = MasterServer.PollHostList();
+			Network.Connect(hostData[0]);
+		}
 
 	}
 
@@ -70,17 +69,12 @@ public class Server : MonoBehaviour
 		m_leapManager.ConnectPlayer(player);
 		return player;
 	}
-	
-    void OnConnectedToServer ()
-    {
-        Debug.Log("Connected to server");
-        createPlayer(m_initialClientLocation, m_initialClientRotation);
-    }
 
-
-	// Update is called once per frame
-	void Update ()
+	void OnConnectedToServer ()
 	{
-	
+		Debug.Log("Connected to server");
+		GameObject player = createPlayer(m_initialClientLocation, m_initialClientRotation);
+		VisualizationController visualizationController = player.GetComponent<VisualizationController>();
+		visualizationController.InitializeColors(m_playerColors[1]);
 	}
 }
