@@ -105,6 +105,9 @@ MonoBehaviour:
   m_initialClientLocation: {x: 0, y: 0, z: 0}
   m_initialServerRotation: {x: 0, y: 0, z: 0, w: 0}
   m_initialClientRotation: {x: 0, y: 0, z: 0, w: 0}
+  m_playerColors:
+  - {r: 0, g: .0482757092, b: 1, a: 1}
+  - {r: .0306794774, g: .889705896, b: 0, a: 1}
   m_leapManager: {fileID: 1917342109}
 --- !u!4 &183055463
 Transform:
