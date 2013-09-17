@@ -17,7 +17,7 @@ public class Server : MonoBehaviour
 
 	private NetworkView m_networkView;
 
-	private GameObject[] m_players;
+	public GameObject[] m_players;
 	private int m_playerIndex;
 
 	void OnEnable ()
@@ -65,6 +65,8 @@ public class Server : MonoBehaviour
 			MasterServer.RegisterHost("SpellGame", "Game Instance");
 
 			CreatePlayer(0);
+			// if testing on one computer, you can create a test client here
+			// CreateTestPlayer(1);
 		}
 
 		// otherwise, let's connect to the first server in the list
@@ -86,6 +88,38 @@ public class Server : MonoBehaviour
 		m_networkView.RPC("RemoteCreatePlayer", RPCMode.AllBuffered, m_playerIndex, playerViewID, pointerViewID);
 	}
 
+	private GameObject CreateTestPlayer (int playerIndex)
+	{
+		NetworkViewID playerViewID = Network.AllocateViewID();
+		NetworkViewID pointerViewID = Network.AllocateViewID();
+
+		// set the position based on the player index
+		Vector3 initialLocation = playerIndex == 0 ? m_initialServerLocation : m_initialClientLocation;
+		Quaternion initialRotation = playerIndex == 0 ? m_initialServerRotation : m_initialClientRotation;
+
+		// create the player object
+		GameObject player = Resources.Load("Player") as GameObject;
+		player = Instantiate(player, initialLocation, initialRotation) as GameObject;
+
+		// get the network view id from the player
+		NetworkView playerNetworkView = player.GetComponent<NetworkView>();
+		playerNetworkView.viewID = playerViewID;
+
+		Wand playerWand = player.GetComponent<Wand>();
+		PointerController pointerController = playerWand.m_pointerController;
+		NetworkView pointerNetworkView = pointerController.gameObject.GetComponent<NetworkView>();
+		pointerNetworkView.viewID = pointerViewID;
+
+		// save a local reference to the player
+		m_players[playerIndex] = player;
+
+		// set the color and the name
+		VisualizationController visualizationController = player.GetComponent<VisualizationController>();
+		visualizationController.InitializeColors(m_playerColors[playerIndex]);
+		player.name = playerIndex == 0 ? "HostPlayer" : "ClientPlayer";
+
+		return player;
+	}
 
 	[RPC]
 	private GameObject RemoteCreatePlayer (int playerIndex, NetworkViewID playerViewID, NetworkViewID pointerViewID)
