@@ -59,8 +59,9 @@ public class Server : MonoBehaviour
 			MasterServer.RegisterHost("SpellGame", "Game Instance");
 
 			m_playerIndex = 0;
-			NetworkViewID viewID = Network.AllocateViewID();
-			m_networkView.RPC("CreatePlayer", RPCMode.AllBuffered, m_playerIndex, viewID);
+			NetworkViewID playerViewID = Network.AllocateViewID();
+			NetworkViewID pointerViewID = Network.AllocateViewID();
+			m_networkView.RPC("CreatePlayer", RPCMode.AllBuffered, m_playerIndex, playerViewID, pointerViewID);
 		}
 
 		// otherwise, let's connect to the first server in the list
@@ -74,7 +75,7 @@ public class Server : MonoBehaviour
 	}
 
 	[RPC]
-	GameObject CreatePlayer (int playerIndex, NetworkViewID viewID)
+	GameObject CreatePlayer (int playerIndex, NetworkViewID playerViewID, NetworkViewID pointerViewID)
 	{
 		// set the position based on the player index
 		Vector3 initialLocation = playerIndex == 1 ? m_initialServerLocation : m_initialClientLocation;
@@ -85,11 +86,16 @@ public class Server : MonoBehaviour
 		player = Instantiate(player, initialLocation, initialRotation) as GameObject;
 
 		// get the network view id from the player
-		NetworkView networkView = player.GetComponent<NetworkView>(); 
-		networkView.viewID = viewID;
+		NetworkView playerNetworkView = player.GetComponent<NetworkView>();
+		playerNetworkView.viewID = playerViewID;
+
+		Wand playerWand = player.GetComponent<Wand>();
+		PointerController pointerController = playerWand.m_pointerController;
+		NetworkView pointerNetworkView = pointerController.gameObject.GetComponent<NetworkView>();
+		pointerNetworkView.viewID = pointerViewID;
 
 		// if the player is mine, connect it to the leap controller
-		if (viewID.isMine)
+		if (playerViewID.isMine)
 		{
 			m_leapManager.ConnectPlayer(player);
 		}
@@ -111,7 +117,8 @@ public class Server : MonoBehaviour
 		Debug.Log("Connected to server");
 
 		m_playerIndex = 1;
-		NetworkViewID viewID = Network.AllocateViewID();
-		m_networkView.RPC("CreatePlayer", RPCMode.AllBuffered, m_playerIndex, viewID);
+		NetworkViewID playerViewID = Network.AllocateViewID();
+		NetworkViewID pointerViewID = Network.AllocateViewID();
+		m_networkView.RPC("CreatePlayer", RPCMode.AllBuffered, m_playerIndex, playerViewID, pointerViewID);
 	}
 }
