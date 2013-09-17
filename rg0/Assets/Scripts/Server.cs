@@ -79,7 +79,7 @@ public class Server : MonoBehaviour
 
 			CreatePlayer(0);
 			// if testing on one computer, you can create a test client here
-			// CreateTestPlayer(1);
+			CreateTestPlayer(1);
 		}
 
 		// otherwise, let's connect to the first server in the list
@@ -107,8 +107,8 @@ public class Server : MonoBehaviour
 		NetworkViewID pointerViewID = Network.AllocateViewID();
 
 		// set the position based on the player index
-		Vector3 initialLocation = playerIndex == 0 ? m_initialServerLocation : m_initialClientLocation;
-		Quaternion initialRotation = playerIndex == 0 ? m_initialServerRotation : m_initialClientRotation;
+		Vector3 initialLocation = m_playerSpawnTransforms[playerIndex].position;
+		Quaternion initialRotation = m_playerSpawnTransforms[playerIndex].rotation;
 
 		// create the player object
 		GameObject player = Resources.Load("Player") as GameObject;
