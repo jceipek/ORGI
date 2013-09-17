@@ -19,13 +19,13 @@ public class PointerController : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-	
+
 	}
-	
+
 	// Update is called once per frame
 	void Update ()
 	{
-	
+
 	}
 
 	// When the LeapManager detects that the leap has moved,
@@ -34,7 +34,7 @@ public class PointerController : MonoBehaviour
 	{
 		// we don't want to worry about where it is in the z axis
 		position.z = 0;
-		transform.position = (position * m_movementScale) + m_positionOffset;
+		transform.localPosition = (position * m_movementScale) + m_positionOffset;
 	}
 
 	public void Gesture (Gesture gesture)
