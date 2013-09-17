@@ -6,6 +6,7 @@ public class PointerController : MonoBehaviour
 {
 
 	public AttackAbility m_attackAbility;
+	public BlockAbility m_blockAbility;
 	public float m_movementScale;
 	public Vector3 m_positionOffset;
 
@@ -43,6 +44,11 @@ public class PointerController : MonoBehaviour
 		{
 			Debug.Log("Gesture type circle arrived at pointercontroller");
 			m_attackAbility.SendAttack();
+		}
+		else if (gesture.Type == Leap.Gesture.GestureType.TYPESWIPE)
+		{
+			Debug.Log("Gesture type swipe arrived at pointercontroller");
+			m_blockAbility.InitiateBlock();
 		}
 	}
 }
