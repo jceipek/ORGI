@@ -91,8 +91,8 @@ public class Server : MonoBehaviour
 	private GameObject RemoteCreatePlayer (int playerIndex, NetworkViewID playerViewID, NetworkViewID pointerViewID)
 	{
 		// set the position based on the player index
-		Vector3 initialLocation = playerIndex == 1 ? m_initialServerLocation : m_initialClientLocation;
-		Quaternion initialRotation = playerIndex == 1 ? m_initialServerRotation : m_initialClientRotation;
+		Vector3 initialLocation = playerIndex == 0 ? m_initialServerLocation : m_initialClientLocation;
+		Quaternion initialRotation = playerIndex == 0 ? m_initialServerRotation : m_initialClientRotation;
 
 		// create the player object
 		GameObject player = Resources.Load("Player") as GameObject;
@@ -119,7 +119,7 @@ public class Server : MonoBehaviour
 		// set the color and the name
 		VisualizationController visualizationController = player.GetComponent<VisualizationController>();
 		visualizationController.InitializeColors(m_playerColors[playerIndex]);
-		player.name = playerIndex == 1 ? "HostPlayer" : "ClientPlayer";
+		player.name = playerIndex == 0 ? "HostPlayer" : "ClientPlayer";
 
 		return player;
 	}
