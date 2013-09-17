@@ -15,6 +15,17 @@ public class Server : MonoBehaviour
 
 	public LeapManager m_leapManager;
 
+	private NetworkView m_networkView;
+
+	private GameObject[] m_players;
+	private int m_playerIndex;
+
+	void OnEnable ()
+	{
+		m_networkView = GetComponent<NetworkView>();
+		m_players = new GameObject[2];
+	}
+
 	void Awake ()
 	{
 		MasterServer.ClearHostList();
@@ -43,13 +54,13 @@ public class Server : MonoBehaviour
 		// if there's no server, let's make one
 		if (MasterServer.PollHostList().Length == 0)
 		{
+			m_playerIndex = 0;
 			Debug.Log("There's no host");
 			Network.InitializeServer(1, 5000, true);
 			MasterServer.RegisterHost("SpellGame", "Game Instance");
 
-			GameObject player = createPlayer(m_initialServerLocation, m_initialServerRotation);
-			VisualizationController visualizationController = player.GetComponent<VisualizationController>();
-			visualizationController.InitializeColors(m_playerColors[0]);
+			m_players[m_playerIndex] = CreatePlayer(m_initialServerLocation, m_initialServerRotation);
+			m_networkView.RPC("ConfigurePlayer", RPCMode.AllBuffered, m_playerIndex);
 		}
 
 		// otherwise, let's connect to the first server in the list
@@ -62,7 +73,17 @@ public class Server : MonoBehaviour
 
 	}
 
-	GameObject createPlayer (Vector3 initialLocation, Quaternion initialRotation)
+	[RPC]
+	GameObject ConfigurePlayer (int playerIndex)
+	{
+		GameObject player = m_players[playerIndex];
+		VisualizationController visualizationController = player.GetComponent<VisualizationController>();
+		visualizationController.InitializeColors(m_playerColors[playerIndex]);
+		player.name = playerIndex == 1 ? "HostPlayer" : "ClientPlayer";
+		return player;
+	}
+
+	GameObject CreatePlayer (Vector3 initialLocation, Quaternion initialRotation)
 	{
 		GameObject player = Resources.Load("Player") as GameObject;
 		player = Network.Instantiate(player, initialLocation, initialRotation, 0) as GameObject;
@@ -72,9 +93,9 @@ public class Server : MonoBehaviour
 
 	void OnConnectedToServer ()
 	{
+		m_playerIndex = 1;
 		Debug.Log("Connected to server");
-		GameObject player = createPlayer(m_initialClientLocation, m_initialClientRotation);
-		VisualizationController visualizationController = player.GetComponent<VisualizationController>();
-		visualizationController.InitializeColors(m_playerColors[1]);
+		m_players[m_playerIndex] = CreatePlayer(m_initialClientLocation, m_initialClientRotation);
+		m_networkView.RPC("ConfigurePlayer", RPCMode.AllBuffered, m_playerIndex);
 	}
 }
