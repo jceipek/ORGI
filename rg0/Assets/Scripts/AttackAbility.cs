@@ -11,18 +11,6 @@ public class AttackAbility : MonoBehaviour
 		m_networkView = GetComponent<NetworkView>();
 	}
 
-	// Use this for initialization
-	void Start ()
-	{
-	
-	}
-	
-	// Update is called once per frame
-	void Update ()
-	{
-	
-	}
-
 	// Send attack to other player
 	public void SendAttack ()
 	{
