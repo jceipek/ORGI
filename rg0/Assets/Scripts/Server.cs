@@ -49,7 +49,13 @@ public class Server : MonoBehaviour
 		}
 	}
 
-	void MakeHostOrClient ()
+	void OnConnectedToServer ()
+	{
+		Debug.Log("Connected to server");
+		CreatePlayer(1);
+	}
+
+	private void MakeHostOrClient ()
 	{
 		// if there's no server, let's make one
 		if (MasterServer.PollHostList().Length == 0)
@@ -58,10 +64,7 @@ public class Server : MonoBehaviour
 			Network.InitializeServer(1, 5000, true);
 			MasterServer.RegisterHost("SpellGame", "Game Instance");
 
-			m_playerIndex = 0;
-			NetworkViewID playerViewID = Network.AllocateViewID();
-			NetworkViewID pointerViewID = Network.AllocateViewID();
-			m_networkView.RPC("CreatePlayer", RPCMode.AllBuffered, m_playerIndex, playerViewID, pointerViewID);
+			CreatePlayer(0);
 		}
 
 		// otherwise, let's connect to the first server in the list
@@ -74,8 +77,18 @@ public class Server : MonoBehaviour
 
 	}
 
+	private void CreatePlayer (int playerIndex)
+	{
+		// Assign a networkview id so we can sync the players and create a player
+		m_playerIndex = playerIndex;
+		NetworkViewID playerViewID = Network.AllocateViewID();
+		NetworkViewID pointerViewID = Network.AllocateViewID();
+		m_networkView.RPC("RemoteCreatePlayer", RPCMode.AllBuffered, m_playerIndex, playerViewID, pointerViewID);
+	}
+
+
 	[RPC]
-	GameObject CreatePlayer (int playerIndex, NetworkViewID playerViewID, NetworkViewID pointerViewID)
+	private GameObject RemoteCreatePlayer (int playerIndex, NetworkViewID playerViewID, NetworkViewID pointerViewID)
 	{
 		// set the position based on the player index
 		Vector3 initialLocation = playerIndex == 1 ? m_initialServerLocation : m_initialClientLocation;
@@ -109,16 +122,5 @@ public class Server : MonoBehaviour
 		player.name = playerIndex == 1 ? "HostPlayer" : "ClientPlayer";
 
 		return player;
-	}
-
-
-	void OnConnectedToServer ()
-	{
-		Debug.Log("Connected to server");
-
-		m_playerIndex = 1;
-		NetworkViewID playerViewID = Network.AllocateViewID();
-		NetworkViewID pointerViewID = Network.AllocateViewID();
-		m_networkView.RPC("CreatePlayer", RPCMode.AllBuffered, m_playerIndex, playerViewID, pointerViewID);
 	}
 }
