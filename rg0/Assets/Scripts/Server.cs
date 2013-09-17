@@ -26,6 +26,8 @@ public class Server : MonoBehaviour
 
 	void Awake ()
 	{
+		MasterServer.ipAddress = "10.41.8.99";
+		MasterServer.port = 23466;
 		MasterServer.ClearHostList();
 		MasterServer.RequestHostList("SpellGame");
 	}

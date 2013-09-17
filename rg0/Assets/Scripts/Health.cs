@@ -19,4 +19,12 @@ public class Health : MonoBehaviour {
 	void ReceiveAttack () {
 		Debug.Log("YOU WERE ATTACKED");
 	}
+
+	void OnCollisionEnter (Collision collision)
+	{
+		// if (collision.gameObject)
+		// {
+		// 	Destroy(collision.gameObject);
+		// }
+	}
 }

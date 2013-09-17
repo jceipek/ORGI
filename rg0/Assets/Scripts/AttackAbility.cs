@@ -31,7 +31,7 @@ public class AttackAbility : MonoBehaviour
 
 
 		Vector3 initialLocation = gameObject.GetComponentInChildren<PointerController>().transform.position;
-		Vector3 finalLocation = m_opponent.GetComponentInChildren<PointerController>().transform.position;
+		Vector3 finalLocation = m_opponent.transform.position;
 
 		Quaternion initialRotation = Quaternion.identity;
 		
