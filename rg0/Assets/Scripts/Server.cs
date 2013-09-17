@@ -5,13 +5,17 @@ public class Server : MonoBehaviour
 {
 	// Make sure the client and server players are in different locations
 	// and facing each other, so they can see the spells flying.
+	public Color[] m_playerColors;
+	public Transform[] m_cameraSpawnTransforms;
+	public Transform[] m_playerSpawnTransforms;
+
 	public Vector3 m_initialServerLocation;
 	public Vector3 m_initialClientLocation;
 
 	public Quaternion m_initialServerRotation;
 	public Quaternion m_initialClientRotation;
 
-	public Color[] m_playerColors;
+
 
 	public LeapManager m_leapManager;
 
@@ -19,11 +23,13 @@ public class Server : MonoBehaviour
 
 	private GameObject[] m_players;
 	private int m_playerIndex;
+	private Camera m_camera;
 
 	void OnEnable ()
 	{
 		m_networkView = GetComponent<NetworkView>();
 		m_players = new GameObject[2];
+		m_camera = Camera.main;
 	}
 
 	void Awake ()
@@ -53,6 +59,21 @@ public class Server : MonoBehaviour
 	{
 		Debug.Log("Connected to server");
 		CreatePlayer(1);
+	}
+
+	void OnDrawGizmos ()
+	{
+		int playerCount = 2; // TODO: Make this not be a magic number!
+		for (int i = 0; i < playerCount; i++)
+		{
+			Gizmos.color = m_playerColors[i];
+			Gizmos.DrawCube(m_playerSpawnTransforms[i].position, Vector3.one);
+			//Gizmos.DrawRay(m_playerSpawnTransforms[i].position, m_playerSpawnTransforms[i].forward * 5); // Don't think this is important - Julian
+
+			Gizmos.DrawWireCube(m_cameraSpawnTransforms[i].position, Vector3.one);
+			Gizmos.DrawRay(m_cameraSpawnTransforms[i].position, m_cameraSpawnTransforms[i].forward * 10);
+		}
+
 	}
 
 	private void MakeHostOrClient ()
@@ -91,8 +112,8 @@ public class Server : MonoBehaviour
 	private GameObject RemoteCreatePlayer (int playerIndex, NetworkViewID playerViewID, NetworkViewID pointerViewID)
 	{
 		// set the position based on the player index
-		Vector3 initialLocation = playerIndex == 0 ? m_initialServerLocation : m_initialClientLocation;
-		Quaternion initialRotation = playerIndex == 0 ? m_initialServerRotation : m_initialClientRotation;
+		Vector3 initialLocation = m_playerSpawnTransforms[playerIndex].position;
+		Quaternion initialRotation = m_playerSpawnTransforms[playerIndex].rotation;
 
 		// create the player object
 		GameObject player = Resources.Load("Player") as GameObject;
@@ -111,6 +132,8 @@ public class Server : MonoBehaviour
 		if (playerViewID.isMine)
 		{
 			m_leapManager.ConnectPlayer(player);
+			m_camera.transform.position = m_cameraSpawnTransforms[playerIndex].position;
+			m_camera.transform.rotation = m_cameraSpawnTransforms[playerIndex].rotation;
 		}
 
 		// save a local reference to the player
