@@ -79,7 +79,7 @@ public class Server : MonoBehaviour
 
 			CreatePlayer(0);
 			// if testing on one computer, you can create a test client here
-			CreateTestPlayer(1);
+			// CreateTestPlayer(1);
 		}
 
 		// otherwise, let's connect to the first server in the list
