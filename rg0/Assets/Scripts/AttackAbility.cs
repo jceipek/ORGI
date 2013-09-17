@@ -27,12 +27,18 @@ public class AttackAbility : MonoBehaviour
 				m_opponent = GameObject.Find("ClientPlayer");
 			}
 		}
-
 		GameObject attackSpell = Resources.Load("AttackSpell") as GameObject;
-		Vector3 initialLocation = new Vector3(0, 0, 0);
+
+
+		Vector3 initialLocation = gameObject.GetComponentInChildren<PointerController>().transform.position;
+		Vector3 finalLocation = m_opponent.GetComponentInChildren<PointerController>().transform.position;
+
 		Quaternion initialRotation = Quaternion.identity;
+		
 		attackSpell = Network.Instantiate(attackSpell, initialLocation, initialRotation, 0) as GameObject;
-		Vector3 direction = m_opponent.transform.position - gameObject.transform.position;
+		
+		Vector3 direction = finalLocation - initialLocation;
+
 		attackSpell.GetComponent<AttackSpell>().Fire(direction);
 		m_networkView.RPC("ReceiveAttack", RPCMode.Others);
 	}
