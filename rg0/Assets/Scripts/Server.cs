@@ -9,14 +9,6 @@ public class Server : MonoBehaviour
 	public Transform[] m_cameraSpawnTransforms;
 	public Transform[] m_playerSpawnTransforms;
 
-	public Vector3 m_initialServerLocation;
-	public Vector3 m_initialClientLocation;
-
-	public Quaternion m_initialServerRotation;
-	public Quaternion m_initialClientRotation;
-
-
-
 	public LeapManager m_leapManager;
 
 	private NetworkView m_networkView;
