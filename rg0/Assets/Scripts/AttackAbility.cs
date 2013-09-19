@@ -34,12 +34,16 @@ public class AttackAbility : MonoBehaviour
 		Vector3 finalLocation = m_opponent.transform.position;
 
 		Quaternion initialRotation = Quaternion.identity;
-		
-		attackSpell = Network.Instantiate(attackSpell, initialLocation, initialRotation, 0) as GameObject;
-		
-		Vector3 direction = finalLocation - initialLocation;
 
-		attackSpell.GetComponent<AttackSpell>().Fire(direction);
+		attackSpell = Network.Instantiate(attackSpell, initialLocation, initialRotation, 0) as GameObject;
+
+		Vector3 posDelta = finalLocation - initialLocation;
+		float distance = posDelta.magnitude;
+		Vector3 direction = posDelta.normalized;
+		Vector3 velocity = direction * 5.0f;
+
+		float lifetime = distance/5.0f;
+		attackSpell.GetComponent<AttackSpell>().Fire(velocity, lifetime);
 		m_networkView.RPC("ReceiveAttack", RPCMode.Others);
 	}
 
