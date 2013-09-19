@@ -27,15 +27,26 @@ public class AttackAbility : MonoBehaviour
 				m_opponent = GameObject.Find("ClientPlayer");
 			}
 		}
-		GameObject attackSpell = Resources.Load("AttackSpell") as GameObject;
-
 
 		Vector3 initialLocation = gameObject.GetComponentInChildren<PointerController>().transform.position;
 		Vector3 finalLocation = m_opponent.transform.position;
 
+		NetworkViewID spellViewID = Network.AllocateViewID();
+		m_networkView.RPC("SpawnAttackSpell", RPCMode.AllBuffered, spellViewID, initialLocation, finalLocation);
+		m_networkView.RPC("ReceiveAttack", RPCMode.Others);
+	}
+
+	[RPC]
+	private void SpawnAttackSpell (NetworkViewID networkViewID, Vector3 initialLocation, Vector3 finalLocation)
+	{
+
 		Quaternion initialRotation = Quaternion.identity;
 
-		attackSpell = Network.Instantiate(attackSpell, initialLocation, initialRotation, 0) as GameObject;
+		GameObject attackSpell = Resources.Load("AttackSpell") as GameObject;
+		attackSpell = Instantiate(attackSpell, initialLocation, initialRotation) as GameObject;
+		NetworkView networkView = attackSpell.GetComponent<NetworkView>();
+		networkView.viewID = networkViewID;
+
 
 		Vector3 posDelta = finalLocation - initialLocation;
 		float distance = posDelta.magnitude;
@@ -43,8 +54,8 @@ public class AttackAbility : MonoBehaviour
 		Vector3 velocity = direction * 5.0f;
 
 		float lifetime = distance/5.0f;
+
 		attackSpell.GetComponent<AttackSpell>().Fire(velocity, lifetime);
-		m_networkView.RPC("ReceiveAttack", RPCMode.Others);
 	}
 
 }
