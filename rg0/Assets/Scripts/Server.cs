@@ -26,7 +26,7 @@ public class Server : MonoBehaviour
 
 	void Awake ()
 	{
-		MasterServer.ipAddress = "10.41.8.99";
+		MasterServer.ipAddress = "cypressf.olin.edu";
 		MasterServer.port = 23466;
 		MasterServer.ClearHostList();
 		MasterServer.RequestHostList("SpellGame");
@@ -76,7 +76,7 @@ public class Server : MonoBehaviour
 		if (MasterServer.PollHostList().Length == 0)
 		{
 			Debug.Log("There's no host");
-			Network.InitializeServer(1, 5000, true);
+			Network.InitializeServer(1, 5000, false);//!Network.HavePublicAddress());
 			MasterServer.RegisterHost("SpellGame", "Game Instance");
 
 			CreatePlayer(0);
