@@ -10,12 +10,19 @@ public class PointerController : MonoBehaviour
 	public float m_movementScale;
 	public Vector3 m_positionOffset;
 
+	public bool m_cameraFlipped;
+	private Camera m_camera;
+
 	// When the LeapManager detects that the leap has moved,
 	// it calls ToolMoved
 	public void ToolMoved (Vector3 position)
 	{
 		// we don't want to worry about where it is in the z axis
 		position.z = 0;
+		if (m_cameraFlipped)
+		{
+			position.x *= -1;
+		}
 		transform.localPosition = (position * m_movementScale) + m_positionOffset;
 	}
 

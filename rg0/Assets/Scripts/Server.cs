@@ -172,6 +172,13 @@ public class Server : MonoBehaviour
 		visualizationController.InitializeColors(m_playerColors[playerIndex]);
 		player.name = playerIndex == 0 ? "HostPlayer" : "ClientPlayer";
 
+
+		// if the player is the second player, reverse the controlls (the camera is from the other direction)
+		if (playerIndex == 1)
+		{
+			player.GetComponentInChildren<PointerController>().m_cameraFlipped = true;
+		}
+
 		return player;
 	}
 }
