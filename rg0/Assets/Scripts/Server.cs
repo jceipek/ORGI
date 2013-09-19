@@ -3,6 +3,10 @@ using System.Collections;
 
 public class Server : MonoBehaviour
 {
+	public bool m_testLocally = false;
+	//public string m_masterServerIp = "cypressf.olin.edu";
+	public string m_masterServerIp = "10.41.88.86";
+
 	// Make sure the client and server players are in different locations
 	// and facing each other, so they can see the spells flying.
 	public Color[] m_playerColors;
@@ -26,7 +30,7 @@ public class Server : MonoBehaviour
 
 	void Awake ()
 	{
-		MasterServer.ipAddress = "cypressf.olin.edu";
+		MasterServer.ipAddress = m_masterServerIp;
 		MasterServer.port = 23466;
 		MasterServer.ClearHostList();
 		MasterServer.RequestHostList("SpellGame");
@@ -82,6 +86,10 @@ public class Server : MonoBehaviour
 			CreatePlayer(0);
 			// if testing on one computer, you can create a test client here
 			// CreateTestPlayer(1);
+			if (m_testLocally)
+			{
+				GameObject player = CreateTestPlayer(1);
+			}
 		}
 
 		// otherwise, let's connect to the first server in the list
@@ -100,7 +108,17 @@ public class Server : MonoBehaviour
 		m_playerIndex = playerIndex;
 		NetworkViewID playerViewID = Network.AllocateViewID();
 		NetworkViewID pointerViewID = Network.AllocateViewID();
-		m_networkView.RPC("RemoteCreatePlayer", RPCMode.AllBuffered, m_playerIndex, playerViewID, pointerViewID);
+		if (m_testLocally)
+		{
+			GameObject player = CreateTestPlayer(m_playerIndex);
+			m_leapManager.ConnectPlayer(player);
+			m_camera.transform.position = m_cameraSpawnTransforms[m_playerIndex].position;
+			m_camera.transform.rotation = m_cameraSpawnTransforms[m_playerIndex].rotation;
+		}
+		else
+		{
+			m_networkView.RPC("RemoteCreatePlayer", RPCMode.AllBuffered, m_playerIndex, playerViewID, pointerViewID);
+		}
 	}
 
 	private GameObject CreateTestPlayer (int playerIndex)

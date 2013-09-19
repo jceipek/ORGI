@@ -102,6 +102,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bdba179df92a4451a61645345a060dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_testLocally: 1
+  m_masterServerIp: 10.41.88.86
   m_playerColors:
   - {r: 0, g: .0482757092, b: 1, a: 1}
   - {r: .0306794774, g: .889705896, b: 0, a: 1}
