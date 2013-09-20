@@ -12,6 +12,30 @@ public class PointerController : MonoBehaviour
 
 	public bool m_cameraFlipped;
 	private Camera m_camera;
+	private bool m_autoMove = false;
+
+
+	public void EnableAutoMove ()
+	{
+		m_autoMove = true;
+		StartCoroutine("TimedMove");
+	}
+
+	public void DisableAutoMove ()
+	{
+		m_autoMove = false;
+		StopCoroutine("TimedMove");
+	}
+
+	IEnumerator TimedMove ()
+	{
+		yield return new WaitForSeconds(Random.Range(0.0f, 1.0f));
+		Vector3 position = Random.insideUnitSphere * 100.0f;
+		position.z = 0;
+		transform.localPosition = (position * m_movementScale) + m_positionOffset;
+
+		StartCoroutine("TimedMove");
+	}
 
 	// When the LeapManager detects that the leap has moved,
 	// it calls ToolMoved

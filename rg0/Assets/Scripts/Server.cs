@@ -108,17 +108,7 @@ public class Server : MonoBehaviour
 		m_playerIndex = playerIndex;
 		NetworkViewID playerViewID = Network.AllocateViewID();
 		NetworkViewID pointerViewID = Network.AllocateViewID();
-		if (m_testLocally)
-		{
-			GameObject player = CreateTestPlayer(m_playerIndex);
-			m_leapManager.ConnectPlayer(player);
-			m_camera.transform.position = m_cameraSpawnTransforms[m_playerIndex].position;
-			m_camera.transform.rotation = m_cameraSpawnTransforms[m_playerIndex].rotation;
-		}
-		else
-		{
-			m_networkView.RPC("RemoteCreatePlayer", RPCMode.AllBuffered, m_playerIndex, playerViewID, pointerViewID);
-		}
+		m_networkView.RPC("RemoteCreatePlayer", RPCMode.AllBuffered, m_playerIndex, playerViewID, pointerViewID);
 	}
 
 	private GameObject CreateTestPlayer (int playerIndex)
@@ -150,6 +140,9 @@ public class Server : MonoBehaviour
 		VisualizationController visualizationController = player.GetComponent<VisualizationController>();
 		visualizationController.InitializeColors(m_playerColors[playerIndex]);
 		player.name = playerIndex == 0 ? "HostPlayer" : "ClientPlayer";
+
+		player.GetComponentInChildren<AttackAbility>().EnableAutoAttack();
+		player.GetComponentInChildren<PointerController>().EnableAutoMove();
 
 		return player;
 	}

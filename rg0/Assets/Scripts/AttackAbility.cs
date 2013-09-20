@@ -5,17 +5,30 @@ public class AttackAbility : MonoBehaviour
 {
 	private NetworkView m_networkView;
 	private GameObject m_opponent;
+	private bool m_autoAttack = false;
+	private float m_velocity = 10.0f;
 
 	void OnEnable ()
 	{
 		m_networkView = GetComponent<NetworkView>();
 	}
 
-	// Send attack to other player
-	public void SendAttack ()
+	public void EnableAutoAttack ()
 	{
-		// find the opponent of the current player
-		// so we can determine the direction we need to shoot the spell
+		m_autoAttack = true;
+		StartCoroutine("TimedAttack");
+	}
+
+	public void DisableAutoAttack ()
+	{
+		m_autoAttack = false;
+		StopCoroutine("TimedAttack");
+	}
+
+	// find the opponent of the current player
+	// so we can determine the direction we need to shoot the spell
+	public GameObject GetOpponent ()
+	{
 		if (!m_opponent)
 		{
 			if (gameObject.name == "ClientPlayer")
@@ -27,9 +40,27 @@ public class AttackAbility : MonoBehaviour
 				m_opponent = GameObject.Find("ClientPlayer");
 			}
 		}
+		return m_opponent;
+	}
 
+	IEnumerator TimedAttack ()
+	{
+		yield return new WaitForSeconds(Random.Range(0.5f, 3.0f));
 		Vector3 initialLocation = gameObject.GetComponentInChildren<PointerController>().transform.position;
-		Vector3 finalLocation = m_opponent.transform.position;
+		Vector3 finalLocation = GetOpponent().transform.position;
+
+		NetworkViewID spellViewID = Network.AllocateViewID();
+		m_networkView.RPC("SpawnAttackSpell", RPCMode.AllBuffered, spellViewID, initialLocation, finalLocation);
+		m_networkView.RPC("ReceiveAttack", RPCMode.Others);
+
+		StartCoroutine("TimedAttack");
+	}
+
+	// Send attack to other player
+	public void SendAttack ()
+	{
+		Vector3 initialLocation = gameObject.GetComponentInChildren<PointerController>().transform.position;
+		Vector3 finalLocation = GetOpponent().transform.position;
 
 		NetworkViewID spellViewID = Network.AllocateViewID();
 		m_networkView.RPC("SpawnAttackSpell", RPCMode.AllBuffered, spellViewID, initialLocation, finalLocation);
@@ -51,9 +82,9 @@ public class AttackAbility : MonoBehaviour
 		Vector3 posDelta = finalLocation - initialLocation;
 		float distance = posDelta.magnitude;
 		Vector3 direction = posDelta.normalized;
-		Vector3 velocity = direction * 5.0f;
+		Vector3 velocity = direction * m_velocity;
 
-		float lifetime = distance/5.0f;
+		float lifetime = distance/m_velocity;
 
 		attackSpell.GetComponent<AttackSpell>().Fire(velocity, lifetime);
 	}
