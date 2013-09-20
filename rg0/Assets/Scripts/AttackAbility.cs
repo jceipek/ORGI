@@ -7,6 +7,7 @@ public class AttackAbility : MonoBehaviour
 	private GameObject m_opponent;
 	private bool m_autoAttack = false;
 	private float m_velocity = 10.0f;
+	private int m_playerIndex = 0;
 
 	void OnEnable ()
 	{
@@ -34,10 +35,12 @@ public class AttackAbility : MonoBehaviour
 			if (gameObject.name == "ClientPlayer")
 			{
 				m_opponent = GameObject.Find("HostPlayer");
+				m_playerIndex = 1;
 			}
 			else if (gameObject.name == "HostPlayer")
 			{
 				m_opponent = GameObject.Find("ClientPlayer");
+				m_playerIndex = 0;
 			}
 		}
 		return m_opponent;
@@ -85,6 +88,11 @@ public class AttackAbility : MonoBehaviour
 		Vector3 velocity = direction * m_velocity;
 
 		float lifetime = distance/m_velocity;
+
+		foreach (Renderer renderer in attackSpell.GetComponentsInChildren<Renderer>())
+		{
+			renderer.material.SetColor ("_TintColor", Server.g.m_playerColors[m_playerIndex]);
+		}
 
 		attackSpell.GetComponent<AttackSpell>().Fire(velocity, lifetime);
 	}

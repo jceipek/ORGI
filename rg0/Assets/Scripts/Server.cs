@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Server : MonoBehaviour
 {
+	public static Server g;
+
 	public bool m_testLocally = false;
 	//public string m_masterServerIp = "cypressf.olin.edu";
 	public string m_masterServerIp = "10.41.88.86";
@@ -23,6 +25,7 @@ public class Server : MonoBehaviour
 
 	void OnEnable ()
 	{
+		g = this;
 		m_networkView = GetComponent<NetworkView>();
 		m_players = new GameObject[2];
 		m_camera = Camera.main;

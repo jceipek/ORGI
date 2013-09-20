@@ -400,6 +400,7 @@ MonoBehaviour:
   m_blockAbility: {fileID: 11400010}
   m_movementScale: .0799999982
   m_positionOffset: {x: 0, y: -12.6000004, z: 0}
+  m_cameraFlipped: 0
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
