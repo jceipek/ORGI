@@ -5,12 +5,12 @@ public class InputHandler : MonoBehaviour
 {
 	public float m_projectionDistance;
 	private Camera m_camera;
-	private GameObject m_enemyPrefab;
+	//private GameObject m_enemyPrefab;
 
 	void OnEnable ()
 	{
 		m_camera = Camera.main;
-		m_enemyPrefab = Resources.Load("Enemy") as GameObject;
+		//m_enemyPrefab = Resources.Load("Enemy") as GameObject;
 	}
 
 	void Update ()
@@ -19,7 +19,8 @@ public class InputHandler : MonoBehaviour
 		{
 			Ray spawnRay = m_camera.ScreenPointToRay(Input.mousePosition);
 			Vector3 spawnPoint =  spawnRay.origin + spawnRay.direction * m_projectionDistance;
-			Instantiate(m_enemyPrefab, spawnPoint, Quaternion.identity);
+			//Instantiate(m_enemyPrefab, spawnPoint, Quaternion.identity);
+			Server.g.SpawnSound(spawnPoint);
 		}
 	}
 
