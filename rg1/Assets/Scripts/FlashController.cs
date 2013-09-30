@@ -6,16 +6,17 @@ public class FlashController : MonoBehaviour
 
 	public Light m_flashbeam;
 	public AudioClip m_clickAudioClip;
+	public bool m_autoBlink;
 
-	private float m_fullIntensity = 0.14f;
-	private float m_lightDuration = 0.2f; // seconds
-	private float m_rejuvenateDuration = 0.8f; // seconds
+	public float m_fullIntensity = 0.14f;
+	public float m_lightDuration = 0.2f; // seconds
+	public float m_rejuvenateDuration = 0.8f; // seconds
 	private bool m_ableToCast = true;
 
 	// Update is called once per frame
 	void Update ()
 	{
-		if (Input.GetButtonDown("Fire1"))
+		if (Input.GetButtonDown("Fire1") || m_autoBlink)
 		{
 			if (m_ableToCast)
 			{
@@ -24,7 +25,7 @@ public class FlashController : MonoBehaviour
 				StartCoroutine(RejuvenateLight(m_rejuvenateDuration));
 				StartCoroutine(KillLight(m_lightDuration));
 			}
-			else
+			else if (!m_autoBlink)
 			{
 				AudioSource.PlayClipAtPoint(m_clickAudioClip, transform.position);
 			}

@@ -99,11 +99,11 @@ Light:
   m_GameObject: {fileID: 590570172}
   m_Enabled: 1
   serializedVersion: 3
-  m_Type: 2
+  m_Type: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0
+  m_Intensity: .720000029
   m_Range: 10
-  m_SpotAngle: 70.6755219
+  m_SpotAngle: 122
   m_CookieSize: 10
   m_Shadows:
     m_Type: 2
@@ -171,6 +171,10 @@ Prefab:
     - target: {fileID: 400000, guid: fe735b527541a4392be0fa03a9fc7cba, type: 3}
       propertyPath: m_LocalRotation.w
       value: .707106709
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: fe735b527541a4392be0fa03a9fc7cba, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fe735b527541a4392be0fa03a9fc7cba, type: 3}
@@ -361,7 +365,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1394042334
 Transform:
   m_ObjectHideFlags: 0
@@ -419,6 +423,34 @@ Prefab:
     - target: {fileID: 400008, guid: 6768976dee36a438e94649249f30b87a, type: 2}
       propertyPath: m_LocalRotation.w
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100012, guid: 6768976dee36a438e94649249f30b87a, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 10800000, guid: 6768976dee36a438e94649249f30b87a, type: 2}
+      propertyPath: m_Intensity
+      value: .720000029
+      objectReference: {fileID: 0}
+    - target: {fileID: 10800000, guid: 6768976dee36a438e94649249f30b87a, type: 2}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2000000, guid: 6768976dee36a438e94649249f30b87a, type: 2}
+      propertyPath: m_RenderingPath
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2000002, guid: 6768976dee36a438e94649249f30b87a, type: 2}
+      propertyPath: m_RenderingPath
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 10800000, guid: 6768976dee36a438e94649249f30b87a, type: 2}
+      propertyPath: m_SpotAngle
+      value: 122
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400008, guid: 6768976dee36a438e94649249f30b87a, type: 2}
+      propertyPath: m_fullIntensity
+      value: .569999993
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6768976dee36a438e94649249f30b87a, type: 2}
@@ -610,6 +642,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_flashbeam: {fileID: 590570173}
   m_clickAudioClip: {fileID: 8300000, guid: c4ffcce92f04b4779bc81bc9271ea2f3, type: 3}
+  m_autoBlink: 0
+  m_fullIntensity: .569999993
+  m_lightDuration: .200000003
+  m_rejuvenateDuration: .800000012
 --- !u!1 &1897535120
 GameObject:
   m_ObjectHideFlags: 0
