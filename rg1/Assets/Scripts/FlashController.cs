@@ -1,23 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(AudioSource))]
 public class FlashController : MonoBehaviour
 {
 
 	public Light m_flashbeam;
 	public AudioClip m_clickAudioClip;
 
-	private AudioSource m_audioSource;
 	private float m_fullIntensity = 0.14f;
 	private float m_lightDuration = 0.2f; // seconds
 	private float m_rejuvenateDuration = 0.8f; // seconds
 	private bool m_ableToCast = true;
-
-	void OnEnable ()
-	{
-		m_audioSource = GetComponent<AudioSource>();
-	}
 
 	// Update is called once per frame
 	void Update ()

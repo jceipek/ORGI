@@ -18,7 +18,7 @@ PlayerSettings:
   defaultScreenHeight: 768
   defaultScreenWidthWeb: 960
   defaultScreenHeightWeb: 600
-  m_RenderingPath: 1
+  m_RenderingPath: 2
   m_ActiveColorSpace: 0
   m_MTRendering: 1
   m_UseDX11: 0
@@ -76,7 +76,7 @@ PlayerSettings:
   AndroidMinSdkVersion: 6
   AndroidPreferredInstallLocation: 1
   aotOptions: 
-  apiCompatibilityLevel: 2
+  apiCompatibilityLevel: 1
   iPhoneStrippingLevel: 0
   iPhoneScriptCallOptimization: 0
   ForceInternetPermission: 0
@@ -145,7 +145,13 @@ PlayerSettings:
   ps3SaveGameSlots: 1
   ps3TrialMode: 0
   flashStrippingLevel: 2
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    data:
+      first: 1
+      second: 
+    data:
+      first: 2
+      second: 
   metroPackageName: rg1
   metroPackageLogo: 
   metroPackageVersion: 
