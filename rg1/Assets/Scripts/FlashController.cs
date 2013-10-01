@@ -9,8 +9,10 @@ public class FlashController : MonoBehaviour
 	public bool m_autoBlink;
 
 	public float m_fullIntensity = 0.14f;
+	public float m_minIntensity = 0.01f;
 	public float m_lightDuration = 0.2f; // seconds
 	public float m_rejuvenateDuration = 0.8f; // seconds
+	public float m_minRejuvenateDuration = 0.2f;
 	private bool m_ableToCast = true;
 
 	// Update is called once per frame
@@ -22,7 +24,7 @@ public class FlashController : MonoBehaviour
 			{
 				m_ableToCast = false;
 				m_flashbeam.intensity = m_fullIntensity;
-				StartCoroutine(RejuvenateLight(m_rejuvenateDuration));
+				StartCoroutine(RejuvenateLight(Random.Range(m_minRejuvenateDuration, m_rejuvenateDuration)));
 				StartCoroutine(KillLight(m_lightDuration));
 			}
 			else if (!m_autoBlink)
@@ -34,7 +36,7 @@ public class FlashController : MonoBehaviour
 
     IEnumerator KillLight (float duration) {
         yield return new WaitForSeconds(duration);
-        m_flashbeam.intensity = 0.0f;
+        m_flashbeam.intensity = m_minIntensity;
     }
 
     IEnumerator RejuvenateLight (float duration) {

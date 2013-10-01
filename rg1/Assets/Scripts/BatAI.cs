@@ -3,6 +3,7 @@ using System.Collections;
 
 public class BatAI : MonoBehaviour {
 
+	public AudioClip m_attackAudioClip;
 	public Transform m_leftBumper;
 	public Transform m_rightBumper;
 
@@ -11,9 +12,19 @@ public class BatAI : MonoBehaviour {
 	public float m_rotSpeed;
 	public float m_rotationFactor;
 
+	private AudioSource m_AudioSource;
+
+	private Vector3 m_targetLoc = new Vector3(-0.956543f, 2.580719f, 1.517822f);
+
+	void OnEnable ()
+	{
+		m_AudioSource = (AudioSource)gameObject.AddComponent(typeof(AudioSource));
+		m_AudioSource.clip = m_attackAudioClip;
+	}
+
 	void Start ()
 	{
-
+		StartCoroutine(DelayedLook());
 	}
 
 	void FixedUpdate ()
@@ -23,6 +34,32 @@ public class BatAI : MonoBehaviour {
 		{
 			AvoidLeft();
 		}
+	}
+
+	void Update ()
+	{
+		if ((transform.position - m_targetLoc).magnitude < 3.0f)
+		{
+			if (!m_AudioSource.isPlaying) {
+				m_AudioSource.Play();
+			}
+		} else {
+			Debug.Log((transform.position - m_targetLoc).magnitude);
+		}
+	}
+
+	IEnumerator DelayedLook ()
+	{
+		while (true) {
+			yield return new WaitForSeconds(2.0f);
+			AimAtLoc();
+		}
+	}
+
+	void AimAtLoc () {
+
+		Vector3 loc = m_targetLoc;
+		transform.LookAt(loc);
 	}
 
 	void MoveAvoid () {
