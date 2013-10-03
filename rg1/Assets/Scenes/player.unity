@@ -800,6 +800,10 @@ Prefab:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11400014, guid: 6768976dee36a438e94649249f30b87a, type: 2}
+      propertyPath: m_useArduino
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6768976dee36a438e94649249f30b87a, type: 2}
   m_RootGameObject: {fileID: 1891185898}
@@ -945,7 +949,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd02bee656917424f813e1e254d51c86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_useArduino: 0
+  m_useArduino: 1
+  m_BPM: 0
+  m_pulse: 0
   m_beatDelay: 0
 --- !u!82 &1394042336
 AudioSource:
