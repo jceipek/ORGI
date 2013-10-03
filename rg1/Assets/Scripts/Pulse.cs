@@ -4,7 +4,7 @@ using System.IO.Ports;
 
 public class Pulse : MonoBehaviour {
 	public bool m_useArduino;
-	private SerialPort stream = new SerialPort("/dev/tty.usbmodem411", 115200);
+	private SerialPort stream = new SerialPort("/dev/tty.usbmodemfa131", 115200);
 
 	private string m_arduinoString;
 	public int m_BPM;
