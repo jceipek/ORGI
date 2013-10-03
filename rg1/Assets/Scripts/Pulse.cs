@@ -5,8 +5,8 @@ using System.IO.Ports;
 public class Pulse : MonoBehaviour {
 	private SerialPort stream = new SerialPort("/dev/tty.usbmodem411", 115200);
 	private string arduinoString;
-	private int BPM;
-	private int pulse;
+	public int BPM;
+	public int pulse;
 	
 	// Use this for initialization
 	void Start ()
