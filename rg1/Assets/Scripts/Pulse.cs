@@ -4,14 +4,17 @@ using System.IO.Ports;
 
 public class Pulse : MonoBehaviour {
 	public bool m_useArduino;
-	private SerialPort stream = new SerialPort("/dev/tty.usbmodemfa131", 115200);
+	private SerialPort m_stream = new SerialPort("/dev/tty.usbmodem411", 115200);
 
 	private string m_arduinoString;
-	public int m_BPM;
-	public int m_pulse;
+	private int m_BPM;
+	private int m_pulse;
+	private int m_interBeatInterval;
+	public float m_beatIntervalToBeatDelay = 1.0f/800.0f;
 
 	private AudioSource m_audioSource;
-	public float m_beatDelay;
+
+	public float m_beatDelay = 0.5f;
 
 	void OnEnable ()
 	{
@@ -21,7 +24,7 @@ public class Pulse : MonoBehaviour {
 	void Start ()
 	{
 		StartCoroutine(Beat());
-		if (m_useArduino) stream.Open(); // Opens the serial port
+		if (m_useArduino) m_stream.Open(); // Opens the serial port
 	}
 
 	// Update is called once per frame
@@ -29,9 +32,11 @@ public class Pulse : MonoBehaviour {
 	{
 		if (m_useArduino)
 		{
-			m_arduinoString = stream.ReadLine(); // Reads the data from the arduino card
+			m_arduinoString = m_stream.ReadLine(); // Reads the data from the arduino card
 			m_BPM = int.Parse(m_arduinoString.Split(',')[0]);
 			m_pulse = int.Parse(m_arduinoString.Split(',')[1]);
+			m_interBeatInterval = int.Parse(m_arduinoString.Split(',')[2]);
+			m_beatDelay = m_interBeatInterval * m_beatIntervalToBeatDelay;
 		}	
 	}
 
@@ -41,6 +46,7 @@ public class Pulse : MonoBehaviour {
 		{
 			while (!m_audioSource.isPlaying) {
 				m_audioSource.Play();
+				yield return new WaitForSeconds(0.001f);
 			}
 			yield return new WaitForSeconds(m_beatDelay);
 			Debug.Log("HI");
