@@ -119,7 +119,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &400000
 Transform:
   m_ObjectHideFlags: 1
@@ -332,11 +332,11 @@ Light:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   serializedVersion: 3
-  m_Type: 2
+  m_Type: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0
+  m_Intensity: .720000029
   m_Range: 10
-  m_SpotAngle: 70.6755219
+  m_SpotAngle: 122
   m_CookieSize: 10
   m_Shadows:
     m_Type: 2
@@ -440,6 +440,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_flashbeam: {fileID: 10800000}
   m_clickAudioClip: {fileID: 8300000, guid: c4ffcce92f04b4779bc81bc9271ea2f3, type: 3}
+  m_autoBlink: 1
+  m_fullIntensity: .569999993
+  m_minIntensity: .100000001
+  m_lightDuration: .200000003
+  m_rejuvenateDuration: .800000012
+  m_minRejuvenateDuration: .200000003
 --- !u!114 &11400010
 MonoBehaviour:
   m_ObjectHideFlags: 1
