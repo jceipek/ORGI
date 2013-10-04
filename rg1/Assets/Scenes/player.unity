@@ -319,7 +319,8 @@ MonoBehaviour:
   m_topBumper: {fileID: 1192961806}
   m_bottomBumper: {fileID: 1631368779}
   m_direction: {x: 0, y: 0, z: 0}
-  m_diveWaitSeconds: 10
+  m_minDiveWaitSeconds: 5
+  m_maxDiveWaitSeconds: 20
   m_speed: 30
   m_rotSpeed: 500
   m_rotationFactor: .430000007
@@ -950,9 +951,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_useArduino: 1
-  m_BPM: 0
-  m_pulse: 0
-  m_beatDelay: 0
+  m_beatIntervalToBeatDelay: .00124999997
+  m_beatDelay: .5
 --- !u!82 &1394042336
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1510,6 +1510,14 @@ Prefab:
     - target: {fileID: 11400002, guid: 35b0170d515cc4f0487475b5227eaf7f, type: 2}
       propertyPath: m_attractToCenterFactor
       value: 1.10000002
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 35b0170d515cc4f0487475b5227eaf7f, type: 2}
+      propertyPath: m_minDiveWaitSeconds
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 35b0170d515cc4f0487475b5227eaf7f, type: 2}
+      propertyPath: m_maxDiveWaitSeconds
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 35b0170d515cc4f0487475b5227eaf7f, type: 2}

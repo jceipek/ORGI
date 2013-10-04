@@ -11,7 +11,8 @@ public class BatAI : MonoBehaviour {
 
 
 	public Vector3 m_direction;
-	public float m_diveWaitSeconds;
+	public float m_minDiveWaitSeconds;
+	public float m_maxDiveWaitSeconds;
 	public float m_speed;
 	public float m_rotSpeed;
 	public float m_rotationFactor;
@@ -61,7 +62,7 @@ public class BatAI : MonoBehaviour {
 	IEnumerator DelayedLook ()
 	{
 		while (true) {
-			yield return new WaitForSeconds(m_diveWaitSeconds);
+			yield return new WaitForSeconds(Random.Range(m_minDiveWaitSeconds, m_maxDiveWaitSeconds));
 			AimAtLoc();
 		}
 	}
