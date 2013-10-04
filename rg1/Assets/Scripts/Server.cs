@@ -127,6 +127,11 @@ public class Server : MonoBehaviour
 		m_networkView.RPC("OtherRemoteCreateEnemy", RPCMode.Others, location);
 	}
 
+	public void StartGame()
+	{
+		Debug.Log("Game Started!");
+	}
+
 	private void MakeHostOrClient ()
 	{
 		bool serverExists = MasterServer.PollHostList().Length != 0;

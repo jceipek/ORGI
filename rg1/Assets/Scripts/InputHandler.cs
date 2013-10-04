@@ -27,6 +27,10 @@ public class InputHandler : MonoBehaviour
 			Vector3 spawnPoint =  spawnRay.origin + spawnRay.direction * m_projectionDistance;
 			Server.g.SpawnSound(spawnPoint);
 		}
+		if (Input.GetButtonDown("StartGame"))
+		{
+			Server.g.StartGame();
+		}
 	}
 
 	void OnDrawGizmos ()
