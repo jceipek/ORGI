@@ -84,6 +84,7 @@ GameObject:
   - 4: {fileID: 53198454}
   - 114: {fileID: 53198455}
   - 148: {fileID: 53198456}
+  - 114: {fileID: 53198457}
   m_Layer: 0
   m_Name: HeartBeat
   m_TagString: HeartBeat
@@ -126,6 +127,17 @@ NetworkView:
   m_ViewID:
     m_ID: 2
     m_Type: 1
+--- !u!114 &53198457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 53198453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04f2f6155c03143dda3ed777f5150c80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &53942178
 GameObject:
   m_ObjectHideFlags: 0

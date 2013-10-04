@@ -119,7 +119,7 @@ MonoBehaviour:
   m_networkMode: 1
   m_connectionEstablished: 0
   m_testLocally: 0
-  m_masterServerIp: 10.41.88.106
+  m_masterServerIp: localhost
 --- !u!4 &356733855
 Transform:
   m_ObjectHideFlags: 0
@@ -184,7 +184,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: cc9c5b8a1a98745b888aa08c160d4219, type: 2}
       propertyPath: m_masterServerIp
-      value: 10.41.88.106
+      value: localhost
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: cc9c5b8a1a98745b888aa08c160d4219, type: 2}
       propertyPath: m_testLocally
