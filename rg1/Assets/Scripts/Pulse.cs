@@ -51,8 +51,7 @@ public class Pulse : MonoBehaviour {
 		{
 			try {
 				m_arduinoString = m_stream.ReadLine(); // Reads the data from the arduino card
-				//m_BPM = int.Parse(m_arduinoString.Split(',')[0]);
-				//m_pulse = int.Parse(m_arduinoString.Split(',')[1]);
+				m_BPM = int.Parse(m_arduinoString.Split(',')[0]);
 				m_interBeatInterval = int.Parse(m_arduinoString.Split(',')[2]);
 				if (m_interBeatInterval/1000.0f - m_audioSource.clip.length > 0.0f)
 				{
