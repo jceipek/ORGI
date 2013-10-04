@@ -11,18 +11,31 @@ public class pulseSync : MonoBehaviour {
 		StartCoroutine(WaitForConnection());
 	}
 
+
+	void OnConnectedToServer ()
+	{
+		Debug.Log("CONNECTED!");
+
+	}
+
 	IEnumerator WaitForConnection ()
 	{
 		while (Server.g && !Server.g.m_connectionEstablished)
 		{
 			yield return new WaitForSeconds(0.1f);
 		}
+		Debug.Log("CONNECTION ESTABLISHED!");
 		if (Server.g && Server.g.IsClient()) {
-			NetworkViewID viewID = Network.AllocateViewID();
 
 			m_networkView = GetComponent<NetworkView>();
-			m_networkView.RPC("syncNetworkViewID", RPCMode.AllBuffered, viewID);
+			Server.g.SyncViewIds (m_networkView, "HeartBeat");
 			m_pulseComponent = GetComponent<Pulse>();
+			// //m_networkView = GetComponent<NetworkView>();
+			// NetworkViewID viewID = Network.AllocateViewID();
+			// //m_networkView = (NetworkView)gameObject.AddComponent(typeof(NetworkView));
+			// m_networkView.viewID = viewID;
+			// m_networkView.RPC("syncNetworkViewID", RPCMode.Others, viewID);
+			// m_pulseComponent = GetComponent<Pulse>();
 		}
 	}
 	
@@ -30,16 +43,19 @@ public class pulseSync : MonoBehaviour {
 	void Update () {
 		if (m_pulseComponent) {
 			m_BPM = m_pulseComponent.m_BPM;
+			Debug.Log("SENDING");
 		}
 	}
 
 	void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info) {
-		stream.Serialize(ref m_BPM);
+	 	stream.Serialize(ref m_BPM);
 	}
 
-	[RPC]
-	public void syncNetworkViewID(NetworkViewID viewID) {
-		m_networkView = GetComponent<NetworkView>();
-		m_networkView.viewID = viewID;
-	}
+	// [RPC]
+	// public void syncNetworkViewID(NetworkViewID viewID) {
+	// 	//NetworkView networkView = GetComponent<NetworkView>();
+	// 	//NetworkView networkView = (NetworkView)gameObject.AddComponent(typeof(NetworkView));
+	// 	m_networkView = GetComponent<NetworkView>();
+	// 	networkView.viewID = viewID;
+	// }
 }

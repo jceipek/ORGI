@@ -8,15 +8,15 @@ public class AvatarNetworking : MonoBehaviour {
 
 	void OnEnable ()
 	{
-		if (Server.g) Server.g.ConnectAvatar(GetComponent<NetworkView>());
+		//if (Server.g) Server.g.ConnectAvatar(GetComponent<NetworkView>());
 	}
 	
 	void Update ()
 	{
-		if (Server.g && Server.g.IsClient())
-		{
-			m_playerPosition = transform.position;
-			m_playerRotation = transform.rotation;
-		}
+		// if (Server.g && Server.g.IsClient())
+		// {
+		// 	m_playerPosition = transform.position;
+		// 	m_playerRotation = transform.rotation;
+		// }
 	}
 }

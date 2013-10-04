@@ -821,7 +821,7 @@ GameObject:
   - 148: {fileID: 1394042338}
   m_Layer: 0
   m_Name: HeartRate
-  m_TagString: Untagged
+  m_TagString: HeartBeat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -923,6 +923,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dd52788916994f54b2bc59e9bb79bb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_BPM: 0
 --- !u!148 &1394042338
 NetworkView:
   m_ObjectHideFlags: 0
@@ -930,7 +931,7 @@ NetworkView:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1394042333}
   m_Enabled: 1
-  m_StateSynchronization: 1
+  m_StateSynchronization: 0
   m_Observed: {fileID: 1394042337}
   m_ViewID:
     m_ID: 3
@@ -1297,6 +1298,10 @@ Prefab:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 14800000, guid: 6768976dee36a438e94649249f30b87a, type: 2}
+      propertyPath: m_StateSynchronization
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6768976dee36a438e94649249f30b87a, type: 2}
   m_RootGameObject: {fileID: 1891185898}
@@ -1374,7 +1379,7 @@ NetworkView:
   m_PrefabInternal: {fileID: 1852631415}
   m_GameObject: {fileID: 1891185898}
   m_Enabled: 1
-  m_StateSynchronization: 2
+  m_StateSynchronization: 0
   m_Observed: {fileID: 1897535121}
   m_ViewID:
     m_ID: 2

@@ -95,14 +95,24 @@ public class Server : MonoBehaviour
 		return Server.g.m_networkMode == NetworkMode.Server;
 	}
 
-	public void ConnectAvatar (NetworkView view)
+	public void SyncViewIds (NetworkView ownerView, string slaveTag)
 	{
-		// if (IsServer())
-		// {
-		// 	NetworkViewID networkViewID = Network.AllocateViewID();
-		// 	m_avatarNetworkViewID = networkViewID;
-		// }
-		// view.viewID = m_avatarNetworkViewID;
+		NetworkViewID viewID = Network.AllocateViewID();
+		ownerView.viewID = viewID;
+		Debug.Log("Local ID:");
+		Debug.Log(m_networkView.viewID);
+		m_networkView.RPC("SyncNetworkViewID", RPCMode.Others, viewID, slaveTag);
+		ownerView.stateSynchronization = NetworkStateSynchronization.Unreliable;
+	}
+
+	[RPC]
+	public void SyncNetworkViewID(NetworkViewID viewID, string slaveTag) {
+		Debug.Log("REMOTE ID:");
+		Debug.Log(m_networkView.viewID);
+		GameObject slaveObject = GameObject.FindWithTag(slaveTag);
+		NetworkView networkView = slaveObject.GetComponent<NetworkView>();
+		networkView.viewID = viewID;
+		networkView.stateSynchronization = NetworkStateSynchronization.Unreliable;
 	}
 
 	public void SpawnSound (Vector3 location)

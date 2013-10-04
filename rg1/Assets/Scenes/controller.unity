@@ -86,7 +86,7 @@ GameObject:
   - 148: {fileID: 53198456}
   m_Layer: 0
   m_Name: HeartBeat
-  m_TagString: Untagged
+  m_TagString: HeartBeat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -113,6 +113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dd52788916994f54b2bc59e9bb79bb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_BPM: 0
 --- !u!148 &53198456
 NetworkView:
   m_ObjectHideFlags: 0
@@ -120,7 +121,7 @@ NetworkView:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 53198453}
   m_Enabled: 1
-  m_StateSynchronization: 1
+  m_StateSynchronization: 0
   m_Observed: {fileID: 53198455}
   m_ViewID:
     m_ID: 2
@@ -205,7 +206,6 @@ GameObject:
   - 4: {fileID: 66910869}
   - 33: {fileID: 66910868}
   - 23: {fileID: 66910867}
-  - 148: {fileID: 66910870}
   - 114: {fileID: 66910871}
   m_Layer: 0
   m_Name: View
@@ -252,18 +252,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 53942182}
---- !u!148 &66910870
-NetworkView:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 66910866}
-  m_Enabled: 1
-  m_StateSynchronization: 1
-  m_Observed: {fileID: 66910869}
-  m_ViewID:
-    m_ID: 1
-    m_Type: 1
 --- !u!114 &66910871
 MonoBehaviour:
   m_ObjectHideFlags: 0
