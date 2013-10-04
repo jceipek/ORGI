@@ -118,8 +118,15 @@ public class Server : MonoBehaviour
 	public void SpawnSound (Vector3 location)
 	{
 		//NetworkViewID networkViewID = Network.AllocateViewID();
-		//m_networkView.RPC("RemoteCreatePlayer", RPCMode.AllBuffered, networkViewID, location);
-		m_networkView.RPC("OtherRemoteCreatePlayer", RPCMode.Others, location);
+		//m_networkView.RPC("RemoteCreateEnemy", RPCMode.AllBuffered, networkViewID, location);
+		m_networkView.RPC("OtherRemoteCreateEnemy", RPCMode.Others, location);
+	}
+
+	public void SpawnEnemy (Vector3 location)
+	{
+		//NetworkViewID networkViewID = Network.AllocateViewID();
+		//m_networkView.RPC("RemoteCreateEnemy", RPCMode.AllBuffered, networkViewID, location);
+		m_networkView.RPC("OtherRemoteCreateEnemy", RPCMode.Others, location);
 	}
 
 	private void MakeHostOrClient ()
@@ -174,14 +181,14 @@ public class Server : MonoBehaviour
 	}
 
 	[RPC]
-	private void OtherRemoteCreatePlayer (Vector3 location)
+	private void OtherRemoteCreateEnemy (Vector3 location)
 	{
 		NetworkViewID networkViewID = Network.AllocateViewID();
-		m_networkView.RPC("RemoteCreatePlayer", RPCMode.AllBuffered, networkViewID, location);
+		m_networkView.RPC("RemoteCreateEnemy", RPCMode.AllBuffered, networkViewID, location);
 	}
 
 	[RPC]
-	private void RemoteCreatePlayer (NetworkViewID networkViewID, Vector3 location)
+	private void RemoteCreateEnemy (NetworkViewID networkViewID, Vector3 location)
 	{
 		Quaternion initialRotation = Quaternion.identity;
 

@@ -24,11 +24,10 @@ public class AvatarNetworking : MonoBehaviour {
 				transform.position = m_playerPosition;
 				transform.rotation = m_playerRotation;	
 			}
-			else
+			else if (m_networkView && m_networkView.observed)
 			{
 				m_networkView.RPC("SyncTransform", RPCMode.Others, ((Transform)m_networkView.observed).rotation, ((Transform)m_networkView.observed).position);
 			}
-			
 		}
 	}
 
