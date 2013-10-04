@@ -154,6 +154,8 @@ GameObject:
   - 4: {fileID: 66910869}
   - 33: {fileID: 66910868}
   - 23: {fileID: 66910867}
+  - 148: {fileID: 66910870}
+  - 114: {fileID: 66910871}
   m_Layer: 0
   m_Name: View
   m_TagString: Untagged
@@ -199,6 +201,29 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 53942182}
+--- !u!148 &66910870
+NetworkView:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 66910866}
+  m_Enabled: 1
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 66910869}
+  m_ViewID:
+    m_ID: 1
+    m_Type: 1
+--- !u!114 &66910871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 66910866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 904dccd85875842198137e564e5f6083, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &665177679
 Prefab:
   m_ObjectHideFlags: 0

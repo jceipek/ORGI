@@ -15,6 +15,8 @@ public class Server : MonoBehaviour
 
 	public enum NetworkMode {Server, Client};
 
+	private NetworkViewID m_avatarNetworkViewID;
+
 	void OnEnable ()
 	{
 		g = this;
@@ -76,6 +78,16 @@ public class Server : MonoBehaviour
 	public bool IsServer ()
 	{
 		return Server.g.m_networkMode == NetworkMode.Server;
+	}
+
+	public void ConnectAvatar (NetworkView view)
+	{
+		if (IsServer())
+		{
+			NetworkViewID networkViewID = Network.AllocateViewID();
+			m_avatarNetworkViewID = networkViewID;
+		}
+		view.viewID = m_avatarNetworkViewID;
 	}
 
 	public void SpawnSound (Vector3 location)

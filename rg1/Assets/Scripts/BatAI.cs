@@ -24,7 +24,7 @@ public class BatAI : MonoBehaviour {
 
 	void OnEnable ()
 	{
-		if (Server.g.IsServer())
+		if (Server.g && Server.g.IsServer())
 		{
 			m_audioSource = GetComponent<AudioSource>();
 			Destroy(m_audioSource);
@@ -60,7 +60,7 @@ public class BatAI : MonoBehaviour {
 		if ((transform.position - m_targetLoc).magnitude < 3.0f)
 		{
 			if (!m_audioSource.isPlaying) {
-				if (Server.g.IsClient())
+				if (Server.g && Server.g.IsClient())
 				{
 					m_audioSource.Play();
 				}
