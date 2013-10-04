@@ -9,7 +9,7 @@ public class Pulse : MonoBehaviour {
 	private SerialPort m_stream;
 
 	private string m_arduinoString;
-	private int m_BPM;
+	public int m_BPM;
 	private int m_pulse;
 	private int m_interBeatInterval;
 	public float m_beatIntervalToBeatDelay = 1.0f/800.0f;

@@ -817,6 +817,8 @@ GameObject:
   - 4: {fileID: 1394042334}
   - 114: {fileID: 1394042335}
   - 82: {fileID: 1394042336}
+  - 114: {fileID: 1394042337}
+  - 148: {fileID: 1394042338}
   m_Layer: 0
   m_Name: HeartRate
   m_TagString: Untagged
@@ -847,8 +849,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd02bee656917424f813e1e254d51c86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_useArduino: 0
+  m_useArduino: 1
   m_arduinoPort: 
+  m_BPM: 0
   m_beatIntervalToBeatDelay: .00124999997
   m_beatDelay: .5
 --- !u!82 &1394042336
@@ -909,6 +912,30 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+--- !u!114 &1394042337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1394042333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dd52788916994f54b2bc59e9bb79bb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BPM: 0
+--- !u!148 &1394042338
+NetworkView:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1394042333}
+  m_Enabled: 1
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 1394042337}
+  m_ViewID:
+    m_ID: 3
+    m_Type: 1
 --- !u!1 &1510431714
 GameObject:
   m_ObjectHideFlags: 0
