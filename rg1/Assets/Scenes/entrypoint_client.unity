@@ -118,7 +118,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_networkMode: 1
   m_testLocally: 0
-  m_masterServerIp: cypressf
+  m_masterServerIp: localhost
 --- !u!4 &356733855
 Transform:
   m_ObjectHideFlags: 0
@@ -183,7 +183,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: cc9c5b8a1a98745b888aa08c160d4219, type: 2}
       propertyPath: m_masterServerIp
-      value: cypressf
+      value: localhost
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: cc9c5b8a1a98745b888aa08c160d4219, type: 2}
+      propertyPath: m_testLocally
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cc9c5b8a1a98745b888aa08c160d4219, type: 2}

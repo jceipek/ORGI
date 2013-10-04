@@ -4,8 +4,6 @@ using System.Collections;
 public class Server : MonoBehaviour
 {
 	public static Server g;
-
-	public enum NetworkMode {Server, Client};
 	public NetworkMode m_networkMode;
 
 	public bool m_testLocally = false;
@@ -14,6 +12,8 @@ public class Server : MonoBehaviour
 	private NetworkView m_networkView;
 	private static string GAME_NAME = "RG1";
 	private GameObject m_enemyPrefab;
+
+	public enum NetworkMode {Server, Client};
 
 	void OnEnable ()
 	{
@@ -68,10 +68,21 @@ public class Server : MonoBehaviour
 		Debug.Log("Connected to server");
 	}
 
+	public bool IsClient ()
+	{
+		return Server.g.m_networkMode == NetworkMode.Client;
+	}
+
+	public bool IsServer ()
+	{
+		return Server.g.m_networkMode == NetworkMode.Server;
+	}
+
 	public void SpawnSound (Vector3 location)
 	{
-		NetworkViewID networkViewID = Network.AllocateViewID();
-		m_networkView.RPC("RemoteCreatePlayer", RPCMode.AllBuffered, networkViewID, location);
+		//NetworkViewID networkViewID = Network.AllocateViewID();
+		//m_networkView.RPC("RemoteCreatePlayer", RPCMode.AllBuffered, networkViewID, location);
+		m_networkView.RPC("OtherRemoteCreatePlayer", RPCMode.Others, location);
 	}
 
 	private void MakeHostOrClient ()
@@ -123,6 +134,13 @@ public class Server : MonoBehaviour
 		{
 			//Debug.LogError("No Existing Host! Can't Start!");
 		}
+	}
+
+	[RPC]
+	private void OtherRemoteCreatePlayer (Vector3 location)
+	{
+		NetworkViewID networkViewID = Network.AllocateViewID();
+		m_networkView.RPC("RemoteCreatePlayer", RPCMode.AllBuffered, networkViewID, location);
 	}
 
 	[RPC]

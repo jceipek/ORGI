@@ -18,14 +18,20 @@ public class BatAI : MonoBehaviour {
 	public float m_rotationFactor;
 	public float m_attractToCenterFactor;
 
-	private AudioSource m_AudioSource;
+	private AudioSource m_audioSource;
 
 	private Vector3 m_targetLoc = new Vector3(-0.956543f, 2.580719f, 1.517822f);
 
 	void OnEnable ()
 	{
-		m_AudioSource = (AudioSource)gameObject.AddComponent(typeof(AudioSource));
-		m_AudioSource.clip = m_attackAudioClip;
+		if (Server.g.IsServer())
+		{
+			m_audioSource = GetComponent<AudioSource>();
+			Destroy(m_audioSource);
+		}
+
+		m_audioSource = (AudioSource)gameObject.AddComponent(typeof(AudioSource));
+		m_audioSource.clip = m_attackAudioClip;
 	}
 
 	void Start ()
@@ -53,8 +59,11 @@ public class BatAI : MonoBehaviour {
 	{
 		if ((transform.position - m_targetLoc).magnitude < 3.0f)
 		{
-			if (!m_AudioSource.isPlaying) {
-				m_AudioSource.Play();
+			if (!m_audioSource.isPlaying) {
+				if (Server.g.IsClient())
+				{
+					m_audioSource.Play();
+				}
 			}
 		}
 	}
