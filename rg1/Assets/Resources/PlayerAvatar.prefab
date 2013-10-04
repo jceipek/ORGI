@@ -78,9 +78,10 @@ GameObject:
   - 4: {fileID: 400008}
   - 114: {fileID: 11400008}
   - 148: {fileID: 14800000}
+  - 114: {fileID: 11400014}
   m_Layer: 0
   m_Name: PlayerAvatar
-  m_TagString: Untagged
+  m_TagString: Avatar
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -450,6 +451,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NeckPosition: {x: 0, y: .600000024, z: 0}
   EyePosition: {x: 0, y: .150000006, z: .0900000036}
+--- !u!114 &11400014
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 904dccd85875842198137e564e5f6083, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_playerPosition: {x: 0, y: 0, z: 0}
+  m_playerRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!124 &12400000
 Behaviour:
   m_ObjectHideFlags: 1
@@ -471,7 +485,7 @@ NetworkView:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100008}
   m_Enabled: 1
-  m_StateSynchronization: 2
+  m_StateSynchronization: 0
   m_Observed: {fileID: 400010}
   m_ViewID:
     m_ID: 0
