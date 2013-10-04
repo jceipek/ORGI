@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.IO.Ports;
+using System.IO;
 
 public class Pulse : MonoBehaviour {
 	public bool m_useArduino;
-	private SerialPort m_stream = new SerialPort("/dev/tty.usbmodem621", 115200);
+	public string m_arduinoPort;
+	private SerialPort m_stream;
 
 	private string m_arduinoString;
 	private int m_BPM;
@@ -17,6 +19,7 @@ public class Pulse : MonoBehaviour {
 	public float m_beatDelay = 0.5f;
 	private float m_maxbeatDelay = 1.0f;
 
+
 	void OnEnable ()
 	{
 		m_audioSource = GetComponent<AudioSource>();
@@ -24,12 +27,21 @@ public class Pulse : MonoBehaviour {
 
 	void Start ()
 	{
+
+		DirectoryInfo dir = new DirectoryInfo("/dev/");
+		FileInfo[] info = dir.GetFiles("tty.usbmodem*");
+		foreach (FileInfo f in info)
+		{
+			m_arduinoPort = f.ToString();
+		}
+
+		m_stream = new SerialPort(m_arduinoPort, 115200);
+
 		StartCoroutine(Beat());
 		if (m_useArduino) {
 			m_stream.Open(); // Opens the serial port
 			m_stream.ReadTimeout = 200;
 		}
-
 	}
 
 	// Update is called once per frame
@@ -59,7 +71,6 @@ public class Pulse : MonoBehaviour {
 				m_audioSource.Play();
 			}
 			yield return new WaitForSeconds(m_beatDelay);
-			Debug.Log("HI");
 		}
 	}
 
