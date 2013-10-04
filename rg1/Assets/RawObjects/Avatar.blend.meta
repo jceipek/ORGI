@@ -1,18 +1,13 @@
 fileFormatVersion: 2
-guid: 3f8cd724ed5894ce9b641502de8678c0
+guid: 4f1e11706e15e46bb917eed6fbe3fa21
 ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
     100000: //RootNode
-    100002: View
     400000: //RootNode
-    400002: View
     2300000: //RootNode
-    2300002: View
     3300000: //RootNode
-    3300002: View
     4300000: Avatar
-    4300002: View
     7400000: Default Take
     9500000: //RootNode
   materials:
