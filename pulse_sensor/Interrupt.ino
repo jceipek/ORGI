@@ -12,7 +12,7 @@ volatile boolean firstBeat = true;        // used to seed rate array so we start
 volatile boolean secondBeat = true;       // used to seed rate array so we startup with reasonable BPM
 
 
-void interruptSetup(){     
+void interruptSetup() {     
     // Initializes Timer2 to throw an interrupt every 2mS.
     TCCR2A = 0x02;     // DISABLE PWM ON DIGITAL PINS 3 AND 11, AND GO INTO CTC MODE
     TCCR2B = 0x06;     // DON'T FORCE COMPARE, 256 PRESCALER 

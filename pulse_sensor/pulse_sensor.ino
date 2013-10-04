@@ -19,10 +19,10 @@ void setup() {
 }
 
 void loop(){
-    outputString = BPM + spacer + Signal + spacer + IBI;
+    outputString = String(BPM) + String(", ") + String(Signal) + String(", ") + String(IBI);
     Serial.println(outputString);
+    Serial.flush();
     if (new_bpm == true){                       // Quantified Self flag is true when arduino finds a heartbeat
         new_bpm = false;                      // reset the Quantified Self flag for next time    
     }  
-    delay(20);                             //  take a break
 }
