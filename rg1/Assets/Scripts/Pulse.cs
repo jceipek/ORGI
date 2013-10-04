@@ -15,6 +15,7 @@ public class Pulse : MonoBehaviour {
 	private AudioSource m_audioSource;
 
 	public float m_beatDelay = 0.5f;
+	private float m_maxbeatDelay = 1.0f;
 
 	void OnEnable ()
 	{
@@ -36,12 +37,18 @@ public class Pulse : MonoBehaviour {
 	{
 		if (m_useArduino)
 		{
-			m_arduinoString = m_stream.ReadLine(); // Reads the data from the arduino card
-			m_BPM = int.Parse(m_arduinoString.Split(',')[0]);
-			m_pulse = int.Parse(m_arduinoString.Split(',')[1]);
-			m_interBeatInterval = int.Parse(m_arduinoString.Split(',')[2]);
-			m_beatDelay = m_interBeatInterval * m_beatIntervalToBeatDelay;
-		}	
+			try {
+				m_arduinoString = m_stream.ReadLine(); // Reads the data from the arduino card
+				m_BPM = int.Parse(m_arduinoString.Split(',')[0]);
+				m_pulse = int.Parse(m_arduinoString.Split(',')[1]);
+				m_interBeatInterval = int.Parse(m_arduinoString.Split(',')[2]);
+				if (m_interBeatInterval/1000.0f - m_audioSource.clip.length > 0.0f)
+				{
+					m_beatDelay = Mathf.Min(m_interBeatInterval/1000.0f - m_audioSource.clip.length, m_maxbeatDelay);
+				}
+			} catch {}
+
+		}
 	}
 
 	IEnumerator Beat ()
@@ -50,7 +57,6 @@ public class Pulse : MonoBehaviour {
 		{
 			while (!m_audioSource.isPlaying) {
 				m_audioSource.Play();
-				yield return new WaitForSeconds(0.001f);
 			}
 			yield return new WaitForSeconds(m_beatDelay);
 			Debug.Log("HI");
