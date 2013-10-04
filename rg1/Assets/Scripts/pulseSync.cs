@@ -19,11 +19,6 @@ public class pulseSync : MonoBehaviour {
 			m_pulseComponent = GetComponent<Pulse>();
 		}
 	}
-
-	// Use this for initialization
-	void Start () {
-
-	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -37,7 +32,7 @@ public class pulseSync : MonoBehaviour {
 	}
 
 	[RPC]
-	void syncNetworkViewID(NetworkViewID viewID) {
+	public void syncNetworkViewID(NetworkViewID viewID) {
 		m_networkView.viewID = viewID;
 	}
 }

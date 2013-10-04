@@ -53,16 +53,26 @@ public class Server : MonoBehaviour
 		switch (msEvent)
 		{
 			case MasterServerEvent.HostListReceived:
+				Debug.Log("Host List Received");
 				MakeHostOrClient();
 				break;
 			case MasterServerEvent.RegistrationFailedNoServer:
 				Debug.Log("NO MASTER SERVER");
 				break;
 			case MasterServerEvent.RegistrationSucceeded:
+				Debug.Log("RegistrationSucceeded");
 				break;
 			default:
 				break;
 		}
+	}
+
+	void OnServerInitialized() {
+	    Debug.Log("Server initialized and ready");
+	}
+	 
+	void OnPlayerConnected(NetworkPlayer player) {
+	    Debug.Log("Player " + " connected from " + player.ipAddress);
 	}
 
 	void OnConnectedToServer ()
