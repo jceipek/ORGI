@@ -40,6 +40,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_networkMode: 0
+  m_connectionEstablished: 0
   m_testLocally: 0
   m_masterServerIp: localhost
 --- !u!148 &14800000
@@ -49,8 +50,8 @@ NetworkView:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
-  m_StateSynchronization: 1
-  m_Observed: {fileID: 400000}
+  m_StateSynchronization: 0
+  m_Observed: {fileID: 0}
   m_ViewID:
     m_ID: 0
     m_Type: 0

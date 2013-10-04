@@ -6,6 +6,9 @@ public class Server : MonoBehaviour
 	public static Server g;
 	public NetworkMode m_networkMode;
 
+
+	public bool m_connectionEstablished = false;
+
 	public bool m_testLocally = false;
 	public string m_masterServerIp = "localhost";
 
@@ -35,6 +38,17 @@ public class Server : MonoBehaviour
 
 	void Start ()
 	{
+		switch (m_networkMode)
+		{
+			case NetworkMode.Server:
+				Application.LoadLevel("controller");
+				break;
+			case NetworkMode.Client:
+				Application.LoadLevel("player");
+				break;
+			default:
+				break;
+		}
 	}
 
 	void OnMasterServerEvent (MasterServerEvent msEvent)
@@ -58,17 +72,7 @@ public class Server : MonoBehaviour
 
 	void OnServerInitialized() {
 	    Debug.Log("Server initialized and ready");
-			switch (m_networkMode)
-			{
-				case NetworkMode.Server:
-					Application.LoadLevel("controller");
-					break;
-				case NetworkMode.Client:
-					Application.LoadLevel("player");
-					break;
-				default:
-					break;
-			}
+	    m_connectionEstablished = true;
 	}
 	 
 	void OnPlayerConnected(NetworkPlayer player) {
@@ -77,18 +81,8 @@ public class Server : MonoBehaviour
 
 	void OnConnectedToServer ()
 	{
-	Debug.Log("Connected to server");
-		switch (m_networkMode)
-		{
-			case NetworkMode.Server:
-				Application.LoadLevel("controller");
-				break;
-			case NetworkMode.Client:
-				Application.LoadLevel("player");
-				break;
-			default:
-				break;
-		}
+		Debug.Log("Connected to server");
+		m_connectionEstablished = true;
 	}
 
 	public bool IsClient ()

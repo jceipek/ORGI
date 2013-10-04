@@ -113,7 +113,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dd52788916994f54b2bc59e9bb79bb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BPM: 0
 --- !u!148 &53198456
 NetworkView:
   m_ObjectHideFlags: 0
@@ -276,6 +275,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 904dccd85875842198137e564e5f6083, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_playerPosition: {x: 0, y: 0, z: 0}
+  m_playerRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1001 &665177679
 Prefab:
   m_ObjectHideFlags: 0

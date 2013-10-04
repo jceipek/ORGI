@@ -160,7 +160,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &335236299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -923,7 +923,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dd52788916994f54b2bc59e9bb79bb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BPM: 0
 --- !u!148 &1394042338
 NetworkView:
   m_ObjectHideFlags: 0
@@ -1238,6 +1237,10 @@ Prefab:
       propertyPath: m_ViewID.m_Type
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 35b0170d515cc4f0487475b5227eaf7f, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 35b0170d515cc4f0487475b5227eaf7f, type: 2}
   m_RootGameObject: {fileID: 335236298}
@@ -1287,6 +1290,10 @@ Prefab:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8100000, guid: 6768976dee36a438e94649249f30b87a, type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 14800000, guid: 6768976dee36a438e94649249f30b87a, type: 2}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}

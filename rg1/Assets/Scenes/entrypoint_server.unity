@@ -99,7 +99,7 @@ NetworkView:
   m_PrefabInternal: {fileID: 381818368}
   m_GameObject: {fileID: 356733852}
   m_Enabled: 1
-  m_StateSynchronization: 1
+  m_StateSynchronization: 0
   m_Observed: {fileID: 356733855}
   m_ViewID:
     m_ID: 1
@@ -117,6 +117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_networkMode: 0
+  m_connectionEstablished: 0
   m_testLocally: 0
   m_masterServerIp: localhost
 --- !u!4 &356733855
@@ -180,6 +181,14 @@ Prefab:
     - target: {fileID: 11400000, guid: cc9c5b8a1a98745b888aa08c160d4219, type: 2}
       propertyPath: m_masterServerIp
       value: localhost
+      objectReference: {fileID: 0}
+    - target: {fileID: 14800000, guid: cc9c5b8a1a98745b888aa08c160d4219, type: 2}
+      propertyPath: m_Observed
+      value: 
+      objectReference: {fileID: 356733855}
+    - target: {fileID: 14800000, guid: cc9c5b8a1a98745b888aa08c160d4219, type: 2}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cc9c5b8a1a98745b888aa08c160d4219, type: 2}
