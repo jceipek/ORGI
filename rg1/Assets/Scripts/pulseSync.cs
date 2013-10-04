@@ -7,11 +7,6 @@ public class pulseSync : MonoBehaviour {
 	public int m_BPM = 0;
 	private Pulse m_pulseComponent;
 
-	void Start () {
-		StartCoroutine(WaitForConnection());
-	}
-
-
 	void OnConnectedToServer ()
 	{
 		if (Server.g && Server.g.IsClient()) {
@@ -22,8 +17,8 @@ public class pulseSync : MonoBehaviour {
 		}
 	}
 	
-	// Update is called once per frame
-	void Update () {
+	void Update ()
+	{
 		if (m_pulseComponent) {
 			m_BPM = m_pulseComponent.m_BPM;
 			m_networkView.RPC("SyncBPM", RPCMode.Others, m_BPM);
