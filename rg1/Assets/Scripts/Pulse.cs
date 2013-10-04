@@ -4,7 +4,7 @@ using System.IO.Ports;
 
 public class Pulse : MonoBehaviour {
 	public bool m_useArduino;
-	private SerialPort m_stream = new SerialPort("/dev/tty.usbmodem411", 115200);
+	private SerialPort m_stream = new SerialPort("/dev/tty.usbmodem621", 115200);
 
 	private string m_arduinoString;
 	private int m_BPM;
@@ -24,7 +24,11 @@ public class Pulse : MonoBehaviour {
 	void Start ()
 	{
 		StartCoroutine(Beat());
-		if (m_useArduino) m_stream.Open(); // Opens the serial port
+		if (m_useArduino) {
+			m_stream.Open(); // Opens the serial port
+			m_stream.ReadTimeout = 200;
+		}
+
 	}
 
 	// Update is called once per frame
@@ -51,5 +55,9 @@ public class Pulse : MonoBehaviour {
 			yield return new WaitForSeconds(m_beatDelay);
 			Debug.Log("HI");
 		}
+	}
+
+	void OnDestroy () {
+		m_stream.Close();
 	}
 }
