@@ -14,17 +14,6 @@ public class pulseSync : MonoBehaviour {
 
 	void OnConnectedToServer ()
 	{
-		Debug.Log("CONNECTED!");
-
-	}
-
-	IEnumerator WaitForConnection ()
-	{
-		while (Server.g && !Server.g.m_connectionEstablished)
-		{
-			yield return new WaitForSeconds(0.1f);
-		}
-		Debug.Log("CONNECTION ESTABLISHED!");
 		if (Server.g && Server.g.IsClient()) {
 
 			m_networkView = GetComponent<NetworkView>();
@@ -39,11 +28,6 @@ public class pulseSync : MonoBehaviour {
 			m_BPM = m_pulseComponent.m_BPM;
 			m_networkView.RPC("SyncBPM", RPCMode.Others, m_BPM);
 		}
-	}
-
-	void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info) {
-		Debug.Log("SENDING");			Debug.Log("SENDING");
-	 	stream.Serialize(ref m_BPM);
 	}
 
 	[RPC]
