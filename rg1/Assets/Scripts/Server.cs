@@ -15,6 +15,7 @@ public class Server : MonoBehaviour
 	private NetworkView m_networkView;
 	private static string GAME_NAME = "RG1";
 	private GameObject m_enemyPrefab;
+	private GameObject m_soundPrefab;
 
 	public enum NetworkMode {Server, Client};
 
@@ -25,6 +26,7 @@ public class Server : MonoBehaviour
 		g = this;
 		m_networkView = GetComponent<NetworkView>();
 		m_enemyPrefab = Resources.Load("Enemy") as GameObject;
+		m_soundPrefab = Resources.Load("ScarySound") as GameObject;
 	}
 
 	void Awake ()
@@ -117,15 +119,11 @@ public class Server : MonoBehaviour
 
 	public void SpawnSound (Vector3 location)
 	{
-		//NetworkViewID networkViewID = Network.AllocateViewID();
-		//m_networkView.RPC("RemoteCreateEnemy", RPCMode.AllBuffered, networkViewID, location);
-		m_networkView.RPC("OtherRemoteCreateEnemy", RPCMode.Others, location);
+		m_networkView.RPC("OtherRemoteCreateSound", RPCMode.Others, location);
 	}
 
 	public void SpawnEnemy (Vector3 location)
 	{
-		//NetworkViewID networkViewID = Network.AllocateViewID();
-		//m_networkView.RPC("RemoteCreateEnemy", RPCMode.AllBuffered, networkViewID, location);
 		m_networkView.RPC("OtherRemoteCreateEnemy", RPCMode.Others, location);
 	}
 
@@ -188,14 +186,32 @@ public class Server : MonoBehaviour
 	}
 
 	[RPC]
+	private void OtherRemoteCreateSound (Vector3 location)
+	{
+		NetworkViewID networkViewID = Network.AllocateViewID();
+		m_networkView.RPC("RemoteCreateSound", RPCMode.AllBuffered, networkViewID, location);
+	}
+
+	[RPC]
 	private void RemoteCreateEnemy (NetworkViewID networkViewID, Vector3 location)
+	{
+		RemoteCreateEntityHelper(m_enemyPrefab, networkViewID, location);
+	}
+
+	[RPC]
+	private void RemoteCreateSound (NetworkViewID networkViewID, Vector3 location)
+	{
+		RemoteCreateEntityHelper(m_soundPrefab, networkViewID, location);
+	}
+
+	private void RemoteCreateEntityHelper(GameObject prefab, NetworkViewID networkViewID, Vector3 location)
 	{
 		Quaternion initialRotation = Quaternion.identity;
 
-		GameObject enemy = Instantiate(m_enemyPrefab, location, initialRotation) as GameObject;
+		GameObject instance = Instantiate(prefab, location, initialRotation) as GameObject;
 
-		// get the network view id from the enemy
-		NetworkView networkView = enemy.GetComponent<NetworkView>();
+		// get the network view id from the instance
+		NetworkView networkView = instance.GetComponent<NetworkView>();
 		networkView.viewID = networkViewID;
 
 		if (networkViewID.isMine)

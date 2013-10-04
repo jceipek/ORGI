@@ -15,11 +15,16 @@ public class InputHandler : MonoBehaviour
 
 	void Update ()
 	{
-		if (Input.GetButtonDown("Fire1"))
+		if (Input.GetButtonDown("SpawnEnemy"))
 		{
 			Ray spawnRay = m_camera.ScreenPointToRay(Input.mousePosition);
 			Vector3 spawnPoint =  spawnRay.origin + spawnRay.direction * m_projectionDistance;
-			//Instantiate(m_enemyPrefab, spawnPoint, Quaternion.identity);
+			Server.g.SpawnEnemy(spawnPoint);
+		}
+		if (Input.GetButtonDown("SpawnSound"))
+		{
+			Ray spawnRay = m_camera.ScreenPointToRay(Input.mousePosition);
+			Vector3 spawnPoint =  spawnRay.origin + spawnRay.direction * m_projectionDistance;
 			Server.g.SpawnSound(spawnPoint);
 		}
 	}
