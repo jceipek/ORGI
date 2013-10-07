@@ -15,7 +15,7 @@ void setup() {
     interruptSetup();                 // set up to read Pulse Sensor signal every 2mS 
     // UN-COMMENT THE NEXT LINE IF YOU ARE POWERING The Pulse Sensor AT LOW VOLTAGE, 
     // AND APPLY THAT VOLTAGE TO THE A-REF PIN
-    //analogReference(EXTERNAL);   
+    analogReference(EXTERNAL);   
 }
 
 void loop(){
