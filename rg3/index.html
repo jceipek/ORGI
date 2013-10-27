@@ -1,54 +1,68 @@
+<!DOCTYPE html>
 <html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale = 1.0, user-scalable = no">
-<style>
-body.bad{
-	background:red;
-}
-body.good, body.bad.good{
-	background: green;
-}
-</style>
-</head>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale = 1.0, user-scalable = no">
+		<style>
+			body.bad{
+				background:red;
+			}
+			body.good, body.bad.good{
+				background: green;
+			}
+		</style>
+		<script type="text/javascript" src="howler.min.js"></script>
+	</head>
 
+	<body>
+	<button name="begin" onclick="start_game()">Play</button>
 
-<body>
-<audio id="brrp" src="brrp.m4a" preload="auto" controls></audio>
-<audio id="beat" src="beat.ogg" preload="auto" controls></audio>
+	<script>
 
-<script>
-var can_move = false;
-window.ondevicemotion = function(event) {  
-	var brrp = document.querySelector("#brrp");
-	var beat = document.querySelector("#beat");
+		var sound = new Howl({
+		  urls: ['sounds.m4a', 'sounds.ogg', 'sounds.wav'],
+		  sprite: {
+		    beat: [0, 453],
+		    brrp: [453, 917]
+		  },
+		  onload: function () {console.log("Loaded!");},
+		  onloaderror: function () {console.log("Failed to load!");}
+		});
 
-    var total = Math.pow(event.acceleration.x, 2) + Math.pow(event.acceleration.y, 2) + Math.pow(event.acceleration.z, 2);
-	if (total > 1 && !can_move) {
-		document.body.classList.add("bad");
-		brrp.play();
-	}
-	else {
-		document.body.classList.remove("bad");
-	}
-}
+		var start_game = function () {
 
-function start_moving() {
-	setTimeout(function(){
-		beat.play();
-		setTimeout(stop_moving, 900);
-	}, 500);
-	can_move = true;
-	document.body.classList.add("good");
-}
+			var can_move = false;
+			window.ondevicemotion = function(event) {  
+			    var total = Math.pow(event.acceleration.x, 2) + Math.pow(event.acceleration.y, 2) + Math.pow(event.acceleration.z, 2);
+				if (total > 1 && !can_move) {
+					document.body.classList.add("bad");
+					sound.play('brrp');
+					console.log("Brrp");
+				}
+				else {
+					document.body.classList.remove("bad");
+				}
+			}
 
-function stop_moving() {
-	can_move = false;
-	document.body.classList.remove("good");
-	setTimeout(start_moving, 400);
-}
+			function start_moving() {
+				setTimeout(function(){
+					sound.play('beat');
+					console.log("Beat");
+					setTimeout(stop_moving, 900);
+				}, 500);
+				can_move = true;
+				document.body.classList.add("good");
+			}
 
-start_moving();
+			function stop_moving() {
+				can_move = false;
+				document.body.classList.remove("good");
+				setTimeout(start_moving, 400);
+			}
 
-</script>
-</body>
+			start_moving();	
+		}
+		
+
+	</script>
+	</body>
 </html>
