@@ -2,67 +2,14 @@
 <html>
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale = 1.0, user-scalable = no">
-		<style>
-			body.bad{
-				background:red;
-			}
-			body.good, body.bad.good{
-				background: green;
-			}
-		</style>
+		<link rel="stylesheet" href="normalize.css"></link>
+		<link rel="stylesheet" href="buttons-min.css"></link>
+		<link rel="stylesheet" href="main.css"></link>
 		<script type="text/javascript" src="howler.min.js"></script>
+		<script type="text/javascript" src="main.js"></script>
 	</head>
 
 	<body>
-	<button name="begin" onclick="start_game()">Play</button>
-
-	<script>
-
-		var sound = new Howl({
-		  urls: ['sounds.m4a', 'sounds.ogg', 'sounds.wav'],
-		  sprite: {
-		    beat: [0, 453],
-		    brrp: [453, 917]
-		  },
-		  onload: function () {console.log("Loaded!");},
-		  onloaderror: function () {console.log("Failed to load!");}
-		});
-
-		var start_game = function () {
-
-			var can_move = false;
-			window.ondevicemotion = function(event) {  
-			    var total = Math.pow(event.acceleration.x, 2) + Math.pow(event.acceleration.y, 2) + Math.pow(event.acceleration.z, 2);
-				if (total > 1 && !can_move) {
-					document.body.classList.add("bad");
-					sound.play('brrp');
-					console.log("Brrp");
-				}
-				else {
-					document.body.classList.remove("bad");
-				}
-			}
-
-			function start_moving() {
-				setTimeout(function(){
-					sound.play('beat');
-					console.log("Beat");
-					setTimeout(stop_moving, 900);
-				}, 500);
-				can_move = true;
-				document.body.classList.add("good");
-			}
-
-			function stop_moving() {
-				can_move = false;
-				document.body.classList.remove("good");
-				setTimeout(start_moving, 400);
-			}
-
-			start_moving();	
-		}
-		
-
-	</script>
+		<button id='js-start-button' name="begin" type="button" class="pure-button">Play</button>
 	</body>
 </html>
